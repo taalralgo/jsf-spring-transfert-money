@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Conpatible"/>
+    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+    <title>index Location</title>
+
+</h:head>
+<f:view>
+    <h:form>
+        <div class="col-md-10 offset-md-2 my-2">
+            <div class="col-sm-4">
+                <h:commandButton value="Ajouter" action="#{locationBean.create}"
+                                 styleClass="btn btn-success btnWidth"/>
+            </div>
+            <div class="col-sm-12">
+                <h:dataTable var="l" value="#{locationBean.locations}"
+                             styleClass="table table-bordered">
+                    <h:column>
+                        <f:facet name="header">Vehicule</f:facet>
+                        <h:outputText value="#{l.idvehicule.matricule}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Client num piece</f:facet>
+                        <h:outputText value="#{l.idclient.numpiece}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Date</f:facet>
+                        <h:outputText value="#{l.date}" >
+                            <f:convertDateTime type="date" pattern="dd-MM-yyyy" />
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Montant</f:facet>
+                        <h:outputText value="#{l.montantlocation}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Jour</f:facet>
+                        <h:outputText value="#{l.nbjour}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Edit</f:facet>
+                        <h:commandButton value="editer" action="#{locationBean.edit(l)}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Delete</f:facet>
+                        <h:commandButton value="Supprimer" action="#{locationBean.delete(l)}"/>
+                    </h:column>
+
+                </h:dataTable>
+            </div>
+        </div>
+    </h:form>
+</f:view>
+</html>

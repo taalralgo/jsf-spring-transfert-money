@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Conpatible"/>
+    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+    <title>add vehicule</title>
+
+</h:head>
+<f:view>
+
+    <h:form id="createClientForm" styleClass="form-horizontal">
+        <c:if test="#{userBean.user.id == null}">
+            <h1>Vous n'etes pas connecté</h1>
+        </c:if>
+        <c:if test="#{userBean.user == null}">
+            <h1>Vous n'etes pas connecté</h1>
+        </c:if>
+        <c:if test="#{userBean.user.id != null}">
+            <div class="form-group">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4">
+                    <h2>ADD VEHICULE</h2>
+                </div>
+            </div>
+            <hr/>
+
+            <div class="form-group">
+                <h:outputLabel for="marque" styleClass="control-label col-sm-4">Marque:</h:outputLabel>
+                <div class="col-sm-4">
+                    <h:selectOneMenu value="#{vehiculeBean.marqueId}" required="true" styleClass="form-control"
+                                     id="marque"
+                                     validatorMessage="marque is required"
+                                     rendered="#{vehiculeBean.vehicule.id == null }">
+                        <f:validateRequired/>
+                        <f:selectItem itemValue="0" itemLabel="Selectionner la marque"/>
+                        <f:selectItems value="#{vehiculeBean.marques}" var="m" itemValue="#{m.id}"
+                                       itemLabel="#{m.libelle}"/>
+                        <f:ajax event="change" listener="#{vehiculeBean.getModelsByMarque}"
+                                render=":createClientForm:model"/>
+                    </h:selectOneMenu>
+                    <h:inputText id="mrqueText" value="#{vehiculeBean.vehicule.model.marque.libelle}"
+                                 styleClass="form-control"
+                                 readonly="true"
+                                 rendered="#{vehiculeBean.vehicule.id != null }">
+                    </h:inputText>
+                </div>
+            </div>
+            <div class="form-group">
+                <h:outputLabel for="model" styleClass="control-label col-sm-4">Modele:</h:outputLabel>
+                <div class="col-sm-4">
+                    <h:selectOneMenu value="#{vehiculeBean.vehicule.model.id}" required="true" styleClass="form-control"
+                                     id="model"
+                                     validatorMessage="modele is required">
+                        <f:validateRequired/>
+                        <f:selectItem itemValue="0" itemLabel="Selectionner le model"/>
+                        <f:selectItems value="#{vehiculeBean.models}" var="mo" itemValue="#{mo.id}"
+                                       itemLabel="#{mo.libelle}"/>
+                    </h:selectOneMenu>
+                </div>
+            </div>
+            <div class="form-group">
+                <h:outputLabel for="matricule" styleClass="control-label col-sm-4">Matricule:</h:outputLabel>
+                <div class="col-sm-4">
+                    <h:panelGroup>
+                        <h:inputText id="matricule" value="#{vehiculeBean.vehicule.matricule}" styleClass="form-control"
+                                     required="true" requiredMessage="Matricule obligatoire">
+                            <f:validateRequired/>
+                            <f:validator validatorId="MatriculeInvalid"/>
+                        </h:inputText>
+                        <h:message for="matricule" styleClass="text-danger"/>
+                    </h:panelGroup>
+                </div>
+            </div>
+            <div class="form-group">
+                <h:outputLabel for="couleur" styleClass="control-label col-sm-4">Couleur:</h:outputLabel>
+                <div class="col-sm-4">
+                    <h:selectOneMenu value="#{vehiculeBean.vehicule.couleur}" required="true" styleClass="form-control"
+                                     id="couleur"
+                                     validatorMessage="modele is required">
+                        <f:selectItem itemLabel="Selectionner une couleur"/>
+                        <f:selectItem itemValue="Rouge" itemLabel="Rouge"/>
+                        <f:selectItem itemValue="Noir" itemLabel="Noir"/>
+                        <f:validateRequired/>
+                    </h:selectOneMenu>
+                </div>
+            </div>
+            <div class="form-group">
+                <h:outputLabel for="prix" styleClass="control-label col-sm-4">Prix du jour:</h:outputLabel>
+                <div class="col-sm-4">
+                    <h:inputText id="prix" value="#{vehiculeBean.vehicule.prixjour}" styleClass="form-control"
+                                 required="true"
+                                 validatorMessage="prix is required">
+                        <f:validateRequired/>
+                    </h:inputText>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-4">
+                    <div class="col-sm-1">
+                        <h:commandButton value="Ajouter" action="#{vehiculeBean.store}"
+                                         styleClass="btn btn-success btnWidth"/>
+                    </div>
+                </div>
+            </div>
+        </c:if>
+
+    </h:form>
+    <h:messages/>
+</f:view>
+</html>
