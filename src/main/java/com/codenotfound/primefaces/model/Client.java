@@ -1,176 +1,99 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
+
 package com.codenotfound.primefaces.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.io.Serializable;
-import java.util.List;
 
-/**
- *
- * @author mac
- */
 @Entity
-@Table(name = "client")
-@NamedQueries({
-        @NamedQuery(name = "Client.findAll", query = "SELECT c FROM Client c")
-        , @NamedQuery(name = "Client.findByIdclient", query = "SELECT c FROM Client c WHERE c.idclient = :idclient")
-        , @NamedQuery(name = "Client.findByNumpiece", query = "SELECT c FROM Client c WHERE c.numpiece = :numpiece")
-        , @NamedQuery(name = "Client.findByPrenom", query = "SELECT c FROM Client c WHERE c.prenom = :prenom")
-        , @NamedQuery(name = "Client.findByNom", query = "SELECT c FROM Client c WHERE c.nom = :nom")
-        , @NamedQuery(name = "Client.findByAdresse", query = "SELECT c FROM Client c WHERE c.adresse = :adresse")
-        , @NamedQuery(name = "Client.findByTel", query = "SELECT c FROM Client c WHERE c.tel = :tel")
-        , @NamedQuery(name = "Client.findByEmail", query = "SELECT c FROM Client c WHERE c.email = :email")})
-public class Client implements Serializable {
+public class Client
+{
 
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idclient")
-    private Long idclient;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "numpiece")
-    private int numpiece;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "prenom")
-    private String prenom;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "nom")
+    private Long id;
+    @Column(length = 100, nullable = false, unique = true)
+    private String numeroPiece;
+    @Column(nullable = false)
     private String nom;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "adresse")
-    private String adresse;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "tel")
-    private String tel;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "email")
-    private String email;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idclient")
-    private List<Location> locationList;
+    @Column(nullable = false)
+    private String prenom;
+    @Column(length = 9, nullable = false, unique = true)
+    private String telephone;
+    @Column(nullable = false)
+    private int compte;//La somme sur son compte
+    private int argent_received;//La somme qu'on lui a envoyer
 
-    public Client() {
+    public Client()
+    {
     }
 
-    public Client(Long idclient) {
-        this.idclient = idclient;
+    public Long getId()
+    {
+        return id;
     }
 
-    public Client(Long idclient, int numpiece, String prenom, String nom, String adresse, String tel, String email) {
-        this.idclient = idclient;
-        this.numpiece = numpiece;
-        this.prenom = prenom;
-        this.nom = nom;
-        this.adresse = adresse;
-        this.tel = tel;
-        this.email = email;
+    public void setId(Long id)
+    {
+        this.id = id;
     }
 
-    public Long getIdclient() {
-        return idclient;
+    public String getNumeroPiece()
+    {
+        return numeroPiece;
     }
 
-    public void setIdclient(Long idclient) {
-        this.idclient = idclient;
+    public void setNumeroPiece(String numeroPiece)
+    {
+        this.numeroPiece = numeroPiece;
     }
 
-    public int getNumpiece() {
-        return numpiece;
-    }
-
-    public void setNumpiece(int numpiece) {
-        this.numpiece = numpiece;
-    }
-
-    public String getPrenom() {
-        return prenom;
-    }
-
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
-
-    public String getNom() {
+    public String getNom()
+    {
         return nom;
     }
 
-    public void setNom(String nom) {
+    public void setNom(String nom)
+    {
         this.nom = nom;
     }
 
-    public String getAdresse() {
-        return adresse;
+    public String getPrenom()
+    {
+        return prenom;
     }
 
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
+    public void setPrenom(String prenom)
+    {
+        this.prenom = prenom;
     }
 
-    public String getTel() {
-        return tel;
+    public String getTelephone()
+    {
+        return telephone;
     }
 
-    public void setTel(String tel) {
-        this.tel = tel;
+    public void setTelephone(String telephone)
+    {
+        this.telephone = telephone;
     }
 
-    public String getEmail() {
-        return email;
+    public int getCompte()
+    {
+        return compte;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setCompte(int compte)
+    {
+        this.compte = compte;
     }
 
-    public List<Location> getLocationList() {
-        return locationList;
+    public int getArgent_received()
+    {
+        return argent_received;
     }
 
-    public void setLocationList(List<Location> locationList) {
-        this.locationList = locationList;
+    public void setArgent_received(int argent_received)
+    {
+        this.argent_received = argent_received;
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idclient != null ? idclient.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Client)) {
-            return false;
-        }
-        Client other = (Client) object;
-        if ((this.idclient == null && other.idclient != null) || (this.idclient != null && !this.idclient.equals(other.idclient))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "model.Client[ idclient=" + idclient + " ]";
-    }
-
 }

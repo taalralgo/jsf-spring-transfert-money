@@ -28,6 +28,8 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
     private Utilisateur u;
+    @Autowired
+    private Utils utils;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
@@ -67,8 +69,9 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
 
     protected String determineTargetUrl(Authentication authentication)
     {
+        boolean isSuper = false;
         boolean isAdmin = false;
-        boolean isUser = false;
+        boolean isCaissier = false;
         Collection<? extends GrantedAuthority> authorities
                 = authentication.getAuthorities();
         String role = "";
@@ -80,10 +83,16 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
                 isAdmin = true;
                 break;
             }
-            else if (grantedAuthority.getAuthority().equals("ROLE_USER"))
+            else if (grantedAuthority.getAuthority().equals("ROLE_SUPER"))
             {
                 role = grantedAuthority.getAuthority();
-                isUser = true;
+                isSuper = true;
+                break;
+            }
+            else if (grantedAuthority.getAuthority().equals("ROLE_CAISSIER"))
+            {
+                role = grantedAuthority.getAuthority();
+                isCaissier= true;
                 break;
             }
             System.out.println("role : " + role);
@@ -92,10 +101,31 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
 
         u = new Utilisateur();
 
-        if (isAdmin)
-            return "/cars.xhtml";
+        u = iUtilisateur.findByLogin(utils.getConnectedUser());
+
+        if(!u.isChanged())
+        {
+            return "/reset.xhtml";
+        }
         else
             return "/helloworld.xhtml";
+//        if (isAdmin) {
+//            return "home";
+//        }
+//        if (isCaissier) {
+//            return "home";
+//        }
+//        if (isSuper) {
+//            return "home";
+//        }
+//        else {
+//            throw new IllegalStateException();
+//        }
+//
+//        if (isAdmin)
+//            return "/cars.xhtml";
+//        else
+//            return "/helloworld.xhtml";
 
 
     }
