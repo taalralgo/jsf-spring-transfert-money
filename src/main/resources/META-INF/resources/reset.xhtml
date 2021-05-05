@@ -8,74 +8,51 @@
       xmlns:pe="http://primefaces.org/ui/extensions">
 
 <h:head>
-    <title>Login</title>
-    <h:outputStylesheet name="/css/login.css"/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>Reset password</title>
+    <h:outputStylesheet name="/template/lib/fontawesome-free/css/all.min.css"/>
+    <h:outputStylesheet name="/template/lib/ionicons/css/ionicons.min.css"/>
+    <h:outputStylesheet name="/template/lib/typicons.font/typicons.css"/>
+    <h:outputStylesheet name="/template/css/azia.css"/>
+
 </h:head>
 
-<h:body>
-    <h:form prependId="false">
+<h:body styleClass="az-body">
+    <div class="az-signin-wrapper">
+        <div class="az-card-signin">
+<!--            <h1 class="az-logo">JSF<span>-</span>SPRING-BY-THERA</h1>-->
+            <div class="az-signin-header">
+                <h2>Premiere connexion!</h2>
+                <h4>Veuillez changer votre mot de passe</h4>
 
-
-        <div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
-            <div class="card card0 border-0">
-                <div class="row d-flex">
-                    <div class="col-lg-6">
-                        <div class="card1 pb-5">
-                            <div class="row"><img src="https://i.imgur.com/CXQmsmF.png" class="logo"/></div>
-                            <div class="row px-3 justify-content-center mt-4 mb-5 border-line"><img
-                                    src="https://i.imgur.com/uNGdWHi.png" class="image"/></div>
-                        </div>
+                <form action="index.html">
+                    <div class="form-group">
+                        <label>Ancien mot de passe</label>
+<!--                        <input type="text" class="form-control" placeholder="Enter your email" value="demo@bootstrapdash.com">-->
+                        <p:inputText id="password" class="form-control" placeholder="Ancien mot de passe"/>
+                    </div><!-- form-group -->
+                    <div class="form-group">
+                        <label>Nouveau mot de passe</label>
+<!--                        <input type="password" class="form-control" placeholder="Enter your password" value="thisisademo">-->
+                        <p:inputText id="new" class="form-control" placeholder="Nouveau mot de passe"/>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="card2 card border-0 px-4 py-5">
-                            <div class="row mb-4 px-3">
-                                <h6 class="mb-0 mr-4 mt-2">Reset</h6>
-                                <div class="facebook text-center mr-3">
-                                    <div class="fa fa-facebook"></div>
-                                </div>
-                                <div class="twitter text-center mr-3">
-                                    <div class="fa fa-twitter"></div>
-                                </div>
-                                <div class="linkedin text-center mr-3">
-                                    <div class="fa fa-linkedin"></div>
-                                </div>
-                            </div>
-                            <div class="row px-3 mb-4">
-                                <div class="line"></div>
-                                <small class="or text-center">Ou</small>
-                                <div class="line"></div>
-                            </div>
-                            <p:outputLabel value="Login ou mot de passe incorrect!" class="red"
-                                           rendered="${!empty param['error']}"/>
-                            <div class="row px-3"><label class="mb-1">
-                                <h6 class="mb-0 text-sm">Login</h6>
-                            </label> <p:inputText id="username" class="mb-4" placeholder="User name"/></div>
-                            <div class="row px-3"><label class="mb-1">
-                                <h6 class="mb-0 text-sm">Mot de passe</h6>
-                            </label> <p:password id="password" class="mb-4" placeholder="Password"/></div>
-
-                            <div class="row mb-3 px-3">
-                                <p:commandButton value="Connexion" ajax="false"/>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <label>Confirmation</label>
+<!--                        <input type="password" class="form-control" placeholder="Enter your password" value="thisisademo">-->
+                        <p:inputText id="confirm" class="form-control" placeholder="Confirmation"/>
                     </div>
-                </div>
-                <div class="bg-blue py-4">
-                    <div class="row px-3">
-                        <small class="ml-4 ml-sm-5 mb-2">Copyright &copy; 2021. All rights reserved.</small>
-                        <div class="social-contact ml-4 ml-sm-auto"><span class="fa fa-facebook mr-4 text-sm"></span>
-                            <span class="fa fa-google-plus mr-4 text-sm"></span> <span
-                                    class="fa fa-linkedin mr-4 text-sm"></span> <span
-                                    class="fa fa-twitter mr-4 mr-sm-5 text-sm"></span></div>
-                    </div>
-                </div>
+                    <button class="btn btn-az-primary btn-block">Reset</button>
+                </form>
+            </div>
+            <div class="az-signin-footer">
+<!--                <p><a href="">Vous avez changé d'avis?</a></p>-->
+                <p>Vous avez changé d'avis? <a href="/helloworld.xhtml">Accueil</a></p>
             </div>
         </div>
+    </div>
 
-    </h:form>
+    <h:outputScript name="/template/lib/jquery/jquery.min.js" />
+    <h:outputScript name="/template/lib/bootstrap/js/bootstrap.bundle.min.js" />
+    <h:outputScript name="/template/lib/ionicons/ionicons.js" />
+    <h:outputScript name="/template/js/azia.js" />
 </h:body>
 </html>
