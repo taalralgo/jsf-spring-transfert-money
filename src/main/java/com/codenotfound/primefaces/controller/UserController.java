@@ -9,8 +9,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 public class UserController
@@ -20,7 +23,15 @@ public class UserController
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private Utilisateur connectedUser;
+    private List<Utilisateur> users;
     public String error = "";
+
+    @GetMapping("/users")
+    public String users()
+    {
+        users = utilisateurRepository.findAll();
+        return "redirect:/users/index.xhtml";
+    }
 
     @PostMapping("/reset/password")
     public String resetPassword(@RequestParam(name = "password") String password,
