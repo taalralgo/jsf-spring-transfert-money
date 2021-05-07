@@ -19,40 +19,37 @@
 <h:body styleClass="az-body">
     <div class="az-signin-wrapper">
         <div class="az-card-signin">
-<!--            <h1 class="az-logo">JSF<span>-</span>SPRING-BY-THERA</h1>-->
             <div class="az-signin-header">
                 <h2>Premiere connexion!</h2>
                 <h4>Veuillez changer votre mot de passe</h4>
+                <p:outputLabel value="#{userController.error}" style="color: red"
+                                   rendered="${param['error']}"/>
 
-                <form action="index.html">
+                <form method="post" action="/reset/password">
                     <div class="form-group">
                         <label>Ancien mot de passe</label>
-<!--                        <input type="text" class="form-control" placeholder="Enter your email" value="demo@bootstrapdash.com">-->
-                        <p:inputText id="password" class="form-control" placeholder="Ancien mot de passe"/>
-                    </div><!-- form-group -->
+                        <p:password id="password" class="form-control" placeholder="Ancien mot de passe"/>
+                    </div>
                     <div class="form-group">
                         <label>Nouveau mot de passe</label>
-<!--                        <input type="password" class="form-control" placeholder="Enter your password" value="thisisademo">-->
-                        <p:inputText id="new" class="form-control" placeholder="Nouveau mot de passe"/>
+                        <p:password id="newpassword" class="form-control" placeholder="Nouveau mot de passe"/>
                     </div>
                     <div class="form-group">
                         <label>Confirmation</label>
-<!--                        <input type="password" class="form-control" placeholder="Enter your password" value="thisisademo">-->
-                        <p:inputText id="confirm" class="form-control" placeholder="Confirmation"/>
+                        <p:password id="confirm" class="form-control" placeholder="Confirmation"/>
                     </div>
                     <button class="btn btn-az-primary btn-block">Reset</button>
                 </form>
             </div>
             <div class="az-signin-footer">
-<!--                <p><a href="">Vous avez changé d'avis?</a></p>-->
                 <p>Vous avez changé d'avis? <a href="/helloworld.xhtml">Accueil</a></p>
             </div>
         </div>
     </div>
 
-    <h:outputScript name="/template/lib/jquery/jquery.min.js" />
-    <h:outputScript name="/template/lib/bootstrap/js/bootstrap.bundle.min.js" />
-    <h:outputScript name="/template/lib/ionicons/ionicons.js" />
-    <h:outputScript name="/template/js/azia.js" />
+    <h:outputScript name="/template/lib/jquery/jquery.min.js"/>
+    <h:outputScript name="/template/lib/bootstrap/js/bootstrap.bundle.min.js"/>
+    <h:outputScript name="/template/lib/ionicons/ionicons.js"/>
+    <h:outputScript name="/template/js/azia.js"/>
 </h:body>
 </html>
