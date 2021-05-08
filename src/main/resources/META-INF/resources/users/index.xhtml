@@ -2,95 +2,80 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:h="http://java.sun.com/jsf/html">
 <h:head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Conpatible"/>
-    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
-    <title>index vehicule</title>
+    <title>Transfert d'argent</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
+    <!-- vendor css -->
+    <link rel="stylesheet" href="/template/lib/fontawesome-free/css/all.min.css"/>
+    <link rel="stylesheet" href="/template/lib/ionicons/css/ionicons.min.css"/>
+    <link rel="stylesheet" href="/template/lib/typicons.font/typicons.css"/>
+    <link rel="stylesheet" href="/template/lib/flag-icon-css/css/flag-icon.min.css"/>
+
+    <!-- azia CSS -->
+    <h:outputStylesheet name="/template/css/azia.css"/>
 </h:head>
-<f:view>
-    <h:form id="form">
-        <p:growl id="msgs" showDetail="true"/>
-
-        <div class="card">
-            <h5>Liste des vehicules</h5>
-            <p:dataTable id="products1" var="v" value="#{vehiculeBean.vehicules}" editable="true"
-                         style="margin-bottom:20px">
-
-                <p:ajax event="rowEdit" listener="#{vehiculeBean.onRowEdit}" update=":form:msgs"/>
-                <p:ajax event="rowEditCancel" listener="#{vehiculeBean.onRowCancel}" update=":form:msgs"/>
-
-                <p:column headerText="Matricule">
-                    <p:cellEditor>
-                        <f:facet name="output">
-                            <h:outputText value="#{v.matricule}"/>
-                        </f:facet>
-                        <f:facet name="input">
-                            <p:inputText id="modelInput" value="#{v.matricule}" style="width:100%"/>
-                        </f:facet>
-                    </p:cellEditor>
-                </p:column>
-
-                <p:column headerText="Modelw">
-                    <p:cellEditor>
-                        <f:facet name="output">
-                            <h:outputText value="#{v.model.libelle}"/>
-                        </f:facet>
-                        <f:facet name="input">
-                            <p:inputText value="#{v.model.libelle}" style="width:100%" label="Modele"/>
-                        </f:facet>
-                    </p:cellEditor>
-                </p:column>
-
-                <p:column headerText="Couleur">
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{v.couleur}"/></f:facet>
-                        <f:facet name="input">
-                            <h:selectOneMenu value="#{v.couleur}" style="width:100%">
-                                <!--                                <f:selectItem itemLabel="Selectionner une couleur"/>-->
-                                <f:selectItem itemValue="Rouge" itemLabel="Rouge"/>
-                                <f:selectItem itemValue="Noir" itemLabel="Noir"/>
-                            </h:selectOneMenu>
-                        </f:facet>
-                    </p:cellEditor>
-                </p:column>
-
-                <p:column headerText="Prix">
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{v.prixjour}"/></f:facet>
-                        <f:facet name="input"><p:inputText value="#{v.prixjour}" style="width:100%"
-                                                           label="Prix"/></f:facet>
-                    </p:cellEditor>
-                </p:column>
-
-                <p:column exportable="false">
-                    <p:rowEditor editTitle="Editer" class="ui-button-warning rounded-button" cancelTitle="Annuler" saveTitle="Enregistrer"/>
-                    <p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" process="@this"
-                                     oncomplete="PF('deleteProductDialog').show()">
-                        <f:setPropertyActionListener value="#{v}" target="#{vehiculeBean.selectedVehicule}"/>
-                    </p:commandButton>
-                </p:column>
-
-            </p:dataTable>
+<!--<f:view>-->
+<body>
+<ui:composition template="/layout/base.xhtml">
+    <ui:define name="contenu">
+        <!--            PRIMEFACES-->
+        <div class="az-content-body pd-lg-l-40 d-flex flex-column">
+            <div class="az-content-label mg-b-5">
+                <h:commandButton value="Ajouter" action="#{userController.create}"
+                                 styleClass="btn btn-success btnWidth"/>
+            </div>
+            <div class="table-responsive">
+                <table class="table mg-b-0">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Salary</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Tiger Nixon</td>
+                        <td>System Architect</td>
+                        <td>$320,800</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Garrett Winters</td>
+                        <td>Accountant</td>
+                        <td>$170,750</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Ashton Cox</td>
+                        <td>Junior Technical Author</td>
+                        <td>$86,000</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">4</th>
+                        <td>Cedric Kelly</td>
+                        <td>Senior Javascript Developer</td>
+                        <td>$433,060</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">5</th>
+                        <td>Airi Satou</td>
+                        <td>Accountant</td>
+                        <td>$162,700</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-
-        <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300"
-                         message="Delete the product?" header="Confirm" severity="warn">
-            <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{vehiculeBean.deleteVehicule}"
-                             process="@this" oncomplete="PF('deleteProductDialog').hide()"/>
-            <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
-                             onclick="PF('deleteProductDialog').hide()"/>
-        </p:confirmDialog>
-
-        <p:confirmDialog global="true" showEffect="fade" width="300">
-            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
-            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
-                             icon="pi pi-times"/>
-        </p:confirmDialog>
-    </h:form>
-</f:view>
+        <!--  ENDPRIMEFACES-->
+    </ui:define>
+</ui:composition>
+</body>
+<!--</f:view>-->
 </html>

@@ -33,6 +33,12 @@ public class UserController
         return "redirect:/users/index.xhtml";
     }
 
+    @GetMapping("/user/create")
+    public String create()
+    {
+        return "create";
+    }
+
     @PostMapping("/reset/password")
     public String resetPassword(@RequestParam(name = "password") String password,
                                 @RequestParam(name = "newpassword") String newpassword,
@@ -73,5 +79,15 @@ public class UserController
     public void setError(String error)
     {
         this.error = error;
+    }
+
+    public List<Utilisateur> getUsers()
+    {
+        return users;
+    }
+
+    public void setUsers(List<Utilisateur> users)
+    {
+        this.users = users;
     }
 }
