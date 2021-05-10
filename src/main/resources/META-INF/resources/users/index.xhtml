@@ -23,56 +23,43 @@
 <ui:composition template="/layout/base.xhtml">
     <ui:define name="contenu">
         <!--            PRIMEFACES-->
-        <div class="az-content-body pd-lg-l-40 d-flex flex-column">
-            <div class="az-content-label mg-b-5">
-                <h:commandButton value="Ajouter" action="#{userController.create}"
-                                 styleClass="btn btn-success btnWidth"/>
+        <h:form>
+            <div class="az-content-body pd-lg-l-40 d-flex flex-column">
+                <div class="az-content-label mg-b-5 py-2">
+                    <h:commandButton value="Ajouter" action="#{userController.create}"
+                                     styleClass="btn btn-primary btnWidth"/>
+                </div>
+                <div class="table-responsive">
+                    <h:dataTable var="u" value="#{userController.users}"
+                                 styleClass="table mg-b-0">
+                        <h:column>
+                            <f:facet name="header">Prenom</f:facet>
+                            <h:outputText value="#{u.prenom}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Nom</f:facet>
+                            <h:outputText value="#{u.nom}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Telephone</f:facet>
+                            <h:outputText value="#{u.telephone}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Role</f:facet>
+                            <h:outputText value="#{u.role.libRole}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Actions</f:facet>
+                            <h:commandButton styleClass="btn btn-warning" value="Editer"
+                                             action="#{userController.edit(u)}"/>
+                            <h:commandButton styleClass="btn btn-danger" value="Supprimer"
+                                             action="#{userController.delete(u)}"/>
+                        </h:column>
+
+                    </h:dataTable>
+                </div>
             </div>
-            <div class="table-responsive">
-                <table class="table mg-b-0">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Salary</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>$320,800</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Garrett Winters</td>
-                        <td>Accountant</td>
-                        <td>$170,750</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Ashton Cox</td>
-                        <td>Junior Technical Author</td>
-                        <td>$86,000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">4</th>
-                        <td>Cedric Kelly</td>
-                        <td>Senior Javascript Developer</td>
-                        <td>$433,060</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">5</th>
-                        <td>Airi Satou</td>
-                        <td>Accountant</td>
-                        <td>$162,700</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        </h:form>
         <!--  ENDPRIMEFACES-->
     </ui:define>
 </ui:composition>

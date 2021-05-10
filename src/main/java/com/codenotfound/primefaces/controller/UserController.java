@@ -1,6 +1,9 @@
 package com.codenotfound.primefaces.controller;
 
+import com.codenotfound.primefaces.config.Utils;
+import com.codenotfound.primefaces.model.Role;
 import com.codenotfound.primefaces.model.Utilisateur;
+import com.codenotfound.primefaces.repository.RoleRepository;
 import com.codenotfound.primefaces.repository.UtilisateurRepository;
 import com.sun.faces.action.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,30 +16,77 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.annotation.ManagedBean;
+import javax.annotation.PostConstruct;
+import javax.inject.Named;
+import java.util.ArrayList;
 import java.util.List;
 
+@ManagedBean
 @Controller
+@Named
 public class UserController
 {
     @Autowired
     private UtilisateurRepository utilisateurRepository;
     @Autowired
+    private RoleRepository roleRepository;
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private Utils utils;
     private Utilisateur connectedUser;
     private List<Utilisateur> users;
-    public String error = "";
+    private String error = "";
+    private Utilisateur user;
+    private int roleId;
+    private List<Role> roles;
+    private String pwdChanged;
 
     @GetMapping("/users")
     public String users()
     {
         users = utilisateurRepository.findAll();
-        return "redirect:/users/index.xhtml";
+//        return "redirect:/users/index.xhtml?faces-redirect=true";
+        return "index.xhtml?faces-redirect=true";
+    }
+
+    @PostConstruct
+    public void init()
+    {
+        this.initData();
+    }
+    private void initData()
+    {
+        this.roleId = 0;
+        this.pwdChanged = "";
+        user = new Utilisateur();
+        user.setRole(new Role());
+    }
+    private void resetData()
+    {
+        this.roleId = user.getRole().getId();
+        this.pwdChanged = "";
     }
 
     @GetMapping("/user/create")
     public String create()
     {
-        return "create";
+        initData();
+        return "create?faces-redirect=true";
+    }
+
+    public String store()
+    {
+        try
+        {
+            utilisateurRepository.save(user);
+            return "index?faces-redirect=true";
+        }
+        catch (Exception ex)
+        {
+            return "create?faces-redirect=true";
+        }
     }
 
     @PostMapping("/reset/password")
@@ -71,6 +121,55 @@ public class UserController
         return "redirect:/logout";
     }
 
+    public String edit(Utilisateur user)
+    {
+        this.user = utilisateurRepository.findById(user.getId());
+        this.roleId = this.user.getRole().getId();
+        pwdChanged = "";
+//        return "redirect:/user/edit";
+        return "edit?faces-redirect=true";
+    }
+
+    @PostMapping("user/edit")
+    public String update()
+    {
+        Role r = roleRepository.findById(roleId);
+        if(r != null)
+        {
+            user.setRole(r);
+            System.out.println("---------------------------------------");
+            System.out.println(pwdChanged);
+            System.out.println("---------------------------------------");
+            utilisateurRepository.save(user);
+            return "index?faces-redirect=true";
+        }
+        resetData();
+        return "edit";
+    }
+
+    public String delete(Utilisateur user)
+    {
+        try
+        {
+            utilisateurRepository.delete(user);
+            return "index?faces-redirect=true";
+        }
+        catch (Exception ex)
+        {
+            return "index?faces-redirect=true";
+        }
+    }
+
+//    public void getRoles()
+//    {
+//        System.out.println("----------------------------");
+//        System.out.println(marqueId);
+//        System.out.println("-----------------------------");
+//        Marque m = marqueEJB.find(marqueId);
+//        this.models = m.getModels();
+////        this.models = marqueEJB.find(this.marqueId).getModels();
+//    }
+
     public String getError()
     {
         return error;
@@ -83,6 +182,7 @@ public class UserController
 
     public List<Utilisateur> getUsers()
     {
+        users = utilisateurRepository.findAll();
         return users;
     }
 
@@ -90,4 +190,49 @@ public class UserController
     {
         this.users = users;
     }
+
+    public Utilisateur getUser()
+    {
+        return user;
+    }
+
+    public void setUser(Utilisateur user)
+    {
+        this.user = user;
+    }
+
+    public int getRoleId()
+    {
+        return roleId;
+    }
+
+    public void setRoleId(int roleId)
+    {
+        this.roleId = roleId;
+    }
+
+    public List<Role> getRoles()
+    {
+        roles = roleRepository.findAll();
+        List<String> list = new ArrayList<String>();
+        list.add("ROLE_SUPER");
+        roles = roleRepository.findAllByLibRoleNotIn(list);
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles)
+    {
+        this.roles = roles;
+    }
+
+    public String getPwdChanged()
+    {
+        return pwdChanged;
+    }
+
+    public void setPwdChanged(String pwdChanged)
+    {
+        this.pwdChanged = pwdChanged;
+    }
 }
+
