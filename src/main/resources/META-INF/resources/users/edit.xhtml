@@ -37,9 +37,17 @@
                         <f:validateRequired/>
                         <f:selectItem itemValue="0" itemLabel="Selectionner un role"/>
                         <f:selectItems value="#{userController.roles}" var="r" itemValue="#{r.id}"
-                                       itemLabel="#{r.libRole}" itemDisabled="#{r.libRole == 'ROLE_SUPER'}"/>
+                                       itemLabel="#{r.libRole}"/>
                     </h:selectOneMenu>
 
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="piece" styleClass="control-label col-sm-4">Numero piece:</h:outputLabel>
+                    <h:inputText id="piece" value="#{userController.user.numeroPiece}"
+                                 styleClass="form-control" required="true"
+                                 validatorMessage="Numero de piece is required">
+                        <f:validateRequired/>
+                    </h:inputText>
                 </div>
                 <div class="form-group">
                     <h:outputLabel for="prenom" styleClass="control-label col-sm-4">Prenom:</h:outputLabel>
@@ -75,9 +83,9 @@
                 </div>
                 <div class="form-group">
                     <h:outputLabel for="password" styleClass="control-label col-sm-4">Mot de passe:</h:outputLabel>
-                    <h:inputText id="password" value="#{userController.pwdChanged}"
+                    <h:inputSecret id="password" value="#{userController.pwdChanged}"
                                  styleClass="form-control">
-                    </h:inputText>
+                    </h:inputSecret>
                 </div>
 
                 <div class="form-group">

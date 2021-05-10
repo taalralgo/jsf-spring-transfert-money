@@ -5,7 +5,6 @@ import com.codenotfound.primefaces.model.Role;
 import com.codenotfound.primefaces.model.Utilisateur;
 import com.codenotfound.primefaces.repository.RoleRepository;
 import com.codenotfound.primefaces.repository.UtilisateurRepository;
-import com.sun.faces.action.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +57,7 @@ public class UserController
     {
         this.initData();
     }
+
     private void initData()
     {
         this.roleId = 0;
@@ -63,6 +65,7 @@ public class UserController
         user = new Utilisateur();
         user.setRole(new Role());
     }
+
     private void resetData()
     {
         this.roleId = user.getRole().getId();
@@ -80,12 +83,31 @@ public class UserController
     {
         try
         {
-            utilisateurRepository.save(user);
-            return "index?faces-redirect=true";
+            if (pwdChanged.length() < 5)
+            {
+                String errorMsg = "Le mot de passe n'est pas valide!";
+                System.out.println("password not valid");
+                FacesContext.getCurrentInstance().addMessage(user.getPwd(), new FacesMessage("Le mot de passe n'est pas valide!"));
+                return "create";
+            }
+            user.setPwd(bCryptPasswordEncoder.encode(pwdChanged));
+            Role role = roleRepository.findById(roleId);
+            if(role != null)
+            {
+                user.setCode(user.getLogin());
+                user.setChanged(true);
+                user.setRole(role);
+                utilisateurRepository.save(user);
+                return "index?faces-redirect=true";
+            }
+            FacesContext.getCurrentInstance().addMessage(user.getRole().getLibRole(), new FacesMessage("Role Error"));
+            return "create";
         }
         catch (Exception ex)
         {
-            return "create?faces-redirect=true";
+            String errorMsg = ex.getMessage();
+            FacesContext.getCurrentInstance().addMessage(user.getPwd(), new FacesMessage(errorMsg));
+            return "create";
         }
     }
 
@@ -125,16 +147,20 @@ public class UserController
     {
         this.user = utilisateurRepository.findById(user.getId());
         this.roleId = this.user.getRole().getId();
+        System.out.println("EDITTTTTTTTTTTTTTTTTTTTT");
+        System.out.println(this.roleId);
         pwdChanged = "";
-//        return "redirect:/user/edit";
         return "edit?faces-redirect=true";
     }
 
     @PostMapping("user/edit")
     public String update()
     {
+        System.out.println("UPPPPPPPPPPPp");
         Role r = roleRepository.findById(roleId);
-        if(r != null)
+        System.out.println("UPDATEEEEEEEEEEEEEEEEEE");
+        System.out.println(r.getLibRole());
+        if (r != null)
         {
             user.setRole(r);
             System.out.println("---------------------------------------");
@@ -215,7 +241,7 @@ public class UserController
     {
         roles = roleRepository.findAll();
         List<String> list = new ArrayList<String>();
-        list.add("ROLE_SUPER");
+        list.add("ROLE_CAISSIER");
         roles = roleRepository.findAllByLibRoleNotIn(list);
         return roles;
     }
