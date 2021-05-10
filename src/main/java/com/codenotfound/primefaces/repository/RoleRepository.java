@@ -8,5 +8,6 @@ import java.util.List;
 public interface RoleRepository extends JpaRepository<Role,Integer>
 {
     public Role findById(int id);
+    public Role findRoleByLibRole(String name);
     public List<Role> findAllByLibRoleNotIn(List<String> list);
 }

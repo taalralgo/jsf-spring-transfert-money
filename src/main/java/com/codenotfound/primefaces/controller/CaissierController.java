@@ -6,14 +6,9 @@ import com.codenotfound.primefaces.model.Utilisateur;
 import com.codenotfound.primefaces.repository.RoleRepository;
 import com.codenotfound.primefaces.repository.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
@@ -26,7 +21,7 @@ import java.util.List;
 @ManagedBean
 @Controller
 @Named
-public class UserController
+public class CaissierController
 {
     @Autowired
     private UtilisateurRepository utilisateurRepository;
@@ -44,11 +39,11 @@ public class UserController
     private List<Role> roles;
     private String pwdChanged;
 
-    @GetMapping("/users")
+    @GetMapping("/caissiers")
     public String users()
     {
-        users = utilisateurRepository.findAll();
-//        return "redirect:/users/index.xhtml?faces-redirect=true";
+        Utilisateur user = utilisateurRepository.findByLogin(utils.getConnectedUser());
+        users = utilisateurRepository.findByAdminId(user.getId());
         return "index.xhtml?faces-redirect=true";
     }
 
@@ -72,7 +67,6 @@ public class UserController
         this.pwdChanged = "";
     }
 
-    @GetMapping("/user/create")
     public String create()
     {
         initData();
@@ -86,16 +80,15 @@ public class UserController
             if (pwdChanged.length() < 5)
             {
                 String errorMsg = "Le mot de passe n'est pas valide!";
-                System.out.println("password not valid");
                 FacesContext.getCurrentInstance().addMessage(user.getPwd(), new FacesMessage("Le mot de passe n'est pas valide!"));
                 return "create";
             }
             user.setPwd(bCryptPasswordEncoder.encode(pwdChanged));
-            Role role = roleRepository.findById(roleId);
+            Role role = roleRepository.findRoleByLibRole("ROLE_CAISSIER");
             if(role != null)
             {
                 user.setCode(user.getLogin());
-                user.setChanged(true);
+                user.setChanged(false);
                 user.setRole(role);
                 utilisateurRepository.save(user);
                 return "index?faces-redirect=true";
@@ -111,58 +104,24 @@ public class UserController
         }
     }
 
-    @PostMapping("/reset/password")
-    public String resetPassword(@RequestParam(name = "password") String password,
-                                @RequestParam(name = "newpassword") String newpassword,
-                                @RequestParam(name = "confirm") String confirm,
-                                Model model)
-    {
-//        String error = "";
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Utilisateur user = (Utilisateur) auth.getPrincipal();
-        connectedUser = utilisateurRepository.findByLogin(user.getLogin());
-        if (newpassword.length() < 6)
-        {
-            error = "Le mot de passe doit faire au moins 6 caracteres.";
-            return "redirect:/reset.xhtml?error=true";
-        }
-        if (password.equals(newpassword))
-        {
-            error = "L'ancien mot de passe et le nouveau mot de passe doit etre different.";
-            return "redirect:/reset.xhtml?error=true";
-        }
-        if (!newpassword.equals(confirm))
-        {
-            error = "La confirmation ne correspond pas au mot de passe.";
-            return "redirect:/reset.xhtml?error=true";
-        }
-
-        connectedUser.setPwd(bCryptPasswordEncoder.encode(newpassword));
-        connectedUser.setChanged(true);
-        utilisateurRepository.save(connectedUser);
-        return "redirect:/logout";
-    }
-
     public String edit(Utilisateur user)
     {
         this.user = utilisateurRepository.findById(user.getId());
         this.roleId = this.user.getRole().getId();
-        System.out.println("EDITTTTTTTTTTTTTTTTTTTTT");
         System.out.println(this.roleId);
         pwdChanged = "";
         return "edit?faces-redirect=true";
     }
 
-    @PostMapping("user/edit")
     public String update()
     {
-        Role r = roleRepository.findById(roleId);
-        System.out.println(r.getLibRole());
+        Role r = roleRepository.findRoleByLibRole("ROLE_CAISSIER");
         if (r != null)
         {
             user.setRole(r);
-            System.out.println(pwdChanged);
             utilisateurRepository.save(user);
+            init();
+            initData();
             return "index?faces-redirect=true";
         }
         resetData();
@@ -194,7 +153,8 @@ public class UserController
 
     public List<Utilisateur> getUsers()
     {
-        users = utilisateurRepository.findAll();
+        Utilisateur user = utilisateurRepository.findByLogin(utils.getConnectedUser());
+        users = utilisateurRepository.findByAdminId(user.getId());
         return users;
     }
 
