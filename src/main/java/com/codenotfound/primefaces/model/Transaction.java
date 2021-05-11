@@ -9,34 +9,25 @@ public class Transaction
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 100, nullable = false)
-    private String numeroPiece;
     @Column(nullable = false)
-    private Long idReceiveClient; //ID du client qui recoit
+    private Client idReceiveClient; //ID du client qui recoit
     @Column(length = 255, nullable = false)
-    private String code;
+    private String code;//Code generer lors de l'envoi pour pouvoir recuperer
+    @Column(length = 10, nullable = false)
+    private String type; //transaction de type envoi ou retrait
     @ManyToOne(fetch = FetchType.EAGER)
-    private Utilisateur utilisateur;//Le cqissier qui a fait la transaction
-    @Column(length = 100, nullable = false)
-    private String numeroPieceEmetteur;
+    private Utilisateur utilisateur;
     @Column(nullable = false)
-    private Long idEmetteur;
+    private Client idEmetteur;
     private int montant;
+    private int adminId;
     private Date createdAt = new Date();
+    @Column(nullable = true)
+    private Date dateTretrait = new Date();
+    private boolean isRetirer = false;
 
     public Transaction()
     {
-    }
-
-    public Transaction(String numeroPiece, Long idReceiveClient, Utilisateur utilisateur, String numeroPieceEmetteur, Long idEmetteur, int montant, Date createdAt)
-    {
-        this.numeroPiece = numeroPiece;
-        this.idReceiveClient = idReceiveClient;
-        this.utilisateur = utilisateur;
-        this.numeroPieceEmetteur = numeroPieceEmetteur;
-        this.idEmetteur = idEmetteur;
-        this.montant = montant;
-        this.createdAt = createdAt;
     }
 
     public Long getId()
@@ -49,22 +40,12 @@ public class Transaction
         this.id = id;
     }
 
-    public String getNumeroPiece()
-    {
-        return numeroPiece;
-    }
-
-    public void setNumeroPiece(String numeroPiece)
-    {
-        this.numeroPiece = numeroPiece;
-    }
-
-    public Long getIdReceiveClient()
+    public Client getIdReceiveClient()
     {
         return idReceiveClient;
     }
 
-    public void setIdReceiveClient(Long idReceiveClient)
+    public void setIdReceiveClient(Client idReceiveClient)
     {
         this.idReceiveClient = idReceiveClient;
     }
@@ -79,6 +60,16 @@ public class Transaction
         this.code = code;
     }
 
+    public String getType()
+    {
+        return type;
+    }
+
+    public void setType(String type)
+    {
+        this.type = type;
+    }
+
     public Utilisateur getUtilisateur()
     {
         return utilisateur;
@@ -89,22 +80,12 @@ public class Transaction
         this.utilisateur = utilisateur;
     }
 
-    public String getNumeroPieceEmetteur()
-    {
-        return numeroPieceEmetteur;
-    }
-
-    public void setNumeroPieceEmetteur(String numeroPieceEmetteur)
-    {
-        this.numeroPieceEmetteur = numeroPieceEmetteur;
-    }
-
-    public Long getIdEmetteur()
+    public Client getIdEmetteur()
     {
         return idEmetteur;
     }
 
-    public void setIdEmetteur(Long idEmetteur)
+    public void setIdEmetteur(Client idEmetteur)
     {
         this.idEmetteur = idEmetteur;
     }
@@ -127,6 +108,26 @@ public class Transaction
     public void setCreatedAt(Date createdAt)
     {
         this.createdAt = createdAt;
+    }
+
+    public Date getDateTretrait()
+    {
+        return dateTretrait;
+    }
+
+    public void setDateTretrait(Date dateTretrait)
+    {
+        this.dateTretrait = dateTretrait;
+    }
+
+    public boolean isRetirer()
+    {
+        return isRetirer;
+    }
+
+    public void setRetirer(boolean retirer)
+    {
+        isRetirer = retirer;
     }
 }
 

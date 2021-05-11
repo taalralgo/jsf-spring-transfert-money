@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+    <title>Transfert d'argent</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <!-- vendor css -->
+    <link rel="stylesheet" href="/template/lib/fontawesome-free/css/all.min.css"/>
+    <link rel="stylesheet" href="/template/lib/ionicons/css/ionicons.min.css"/>
+    <link rel="stylesheet" href="/template/lib/typicons.font/typicons.css"/>
+    <link rel="stylesheet" href="/template/lib/flag-icon-css/css/flag-icon.min.css"/>
+
+    <!-- azia CSS -->
+    <h:outputStylesheet name="/template/css/azia.css"/>
+</h:head>
+<!--<f:view>-->
+<body>
+<ui:composition template="/layout/base.xhtml">
+    <ui:define name="contenu">
+        <!--            PRIMEFACES-->
+        <h:form>
+            <div class="az-content-body pd-lg-l-40 d-flex flex-column">
+                <div class="az-content-label mg-b-5 py-2">
+                    <h:commandButton value="Effectuer une transaction" action="#{transactionController.create}"
+                                     styleClass="btn btn-primary btnWidth"/>
+                </div>
+                <div class="table-responsive">
+                    <h:dataTable var="t" value="#{transactionController.transactions}"
+                                 styleClass="table mg-b-0">
+                        <h:column>
+                            <f:facet name="header">Caissier: #{t.utilisateur.numeroPiece}</f:facet>
+                            <h:outputText value="#{t.utilisateur.prenom + ' ' + t.utilisateur.nom}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">De: #{t.idEmetteur.numeroPiece}</f:facet>
+                            <h:outputText value="#{t.idEmetteur.prenom + ' ' + t.idEmetteur.nom}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">A: #{t.idReceiveClient.numeroPiece}</f:facet>
+                            <h:outputText value="#{t.idReceiveClient.prenom + ' '+ t.idReceiveClient.nom}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Montant</f:facet>
+                            <h:outputText value="#{t.montant}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Date</f:facet>
+                            <h:outputText value="#{t.createdAt}">
+                                <f:convertDateTime type="date" pattern="dd-MM-yyyy" />
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Statut</f:facet>
+                            <h:outputText value="#{t.isRetirer == true ? 'Retirer' : 'Non retirer'}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Actions</f:facet>
+                            <h:commandButton styleClass="btn btn-outline-info" value="Retirer"
+                                             action="#{transactionController.retirer(t)}"/>&nbsp;
+                            <h:commandButton styleClass="btn btn-outline-success" value="Imprimer"
+                                             action="#{transactionController.print(t)}"/>
+                        </h:column>
+
+                    </h:dataTable>
+                </div>
+            </div>
+        </h:form>
+        <!--  ENDPRIMEFACES-->
+    </ui:define>
+</ui:composition>
+</body>
+<!--</f:view>-->
+</html>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+    <title>Transfert d'argent</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <!-- vendor css -->
+    <link rel="stylesheet" href="/template/lib/fontawesome-free/css/all.min.css"/>
+    <link rel="stylesheet" href="/template/lib/ionicons/css/ionicons.min.css"/>
+    <link rel="stylesheet" href="/template/lib/typicons.font/typicons.css"/>
+    <link rel="stylesheet" href="/template/lib/flag-icon-css/css/flag-icon.min.css"/>
+
+    <!-- azia CSS -->
+    <h:outputStylesheet name="/template/css/azia.css"/>
+</h:head>
+<f:view>
+    <ui:composition template="/layout/base.xhtml">
+        <ui:define name="contenu">
+            <div class="container">
+                <h5>IV: #{transactionController.connectedUser.iv}</h5>
+            </div>
+            <h:form id="createTransactionForm" styleClass="form-horizontal">
+                <h:messages/>
+                <div class="az-content-body pd-lg-l-40 d-flex flex-column">
+                    <div class="az-content-label mg-b-5 py-2">
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel for="piece" styleClass="control-label col-sm-4">Numero piece:</h:outputLabel>
+                        <h:inputText id="piece" value="#{transactionController.transaction.idEmetteur.numeroPiece}"
+                                     styleClass="form-control" required="true"
+                                     validatorMessage="Numero de piece is required">
+                            <f:validateRequired/>
+                        </h:inputText>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel for="prenom" styleClass="control-label col-sm-4">Prenom:</h:outputLabel>
+                        <h:inputText id="prenom" value="#{transactionController.transaction.idEmetteur.prenom}"
+                                     styleClass="form-control" required="true" readonly="true"
+                                     validatorMessage="Prenom is required">
+                            <f:validateRequired/>
+                        </h:inputText>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel for="nom" styleClass="control-label col-sm-4">Nom:</h:outputLabel>
+                        <h:inputText id="nom" value="#{transactionController.transaction.idEmetteur.nom}"
+                                     styleClass="form-control" required="true" readonly="true"
+                                     validatorMessage="Nom is required">
+                            <f:validateRequired/>
+                        </h:inputText>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel for="phone" styleClass="control-label col-sm-4">Telephone:</h:outputLabel>
+                        <h:inputText id="phone" value="#{transactionController.transaction.idEmetteur.telephone}"
+                                     styleClass="form-control" required="true" readonly="true"
+                                     validatorMessage="Phone is required">
+                            <f:validateRequired/>
+                        </h:inputText>
+                    </div>
+                    <hr/>
+                    <div class="form-group">
+                        <h:outputLabel for="recepteurpiece" styleClass="control-label col-sm-4">Numero piece:</h:outputLabel>
+                        <h:inputText id="recepteurpiece" value="#{transactionController.transaction.idReceiveClient.numeroPiece}"
+                                     styleClass="form-control" required="true"
+                                     validatorMessage="Numero de piece is required">
+                            <f:validateRequired/>
+                        </h:inputText>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel for="recepteurprenom" styleClass="control-label col-sm-4">Prenom:</h:outputLabel>
+                        <h:inputText id="recepteurprenom" value="#{transactionController.transaction.idReceiveClient.prenom}"
+                                     styleClass="form-control" required="true" readonly="true"
+                                     validatorMessage="Prenom is required">
+                            <f:validateRequired/>
+                        </h:inputText>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel for="recepteurnom" styleClass="control-label col-sm-4">Nom:</h:outputLabel>
+                        <h:inputText id="recepteurnom" value="#{transactionController.transaction.idReceiveClient.nom}"
+                                     styleClass="form-control" required="true" readonly="true"
+                                     validatorMessage="Nom is required">
+                            <f:validateRequired/>
+                        </h:inputText>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel for="recepteurphone" styleClass="control-label col-sm-4">Telephone:</h:outputLabel>
+                        <h:inputText id="recepteurphone" value="#{transactionController.transaction.idReceiveClient.telephone}"
+                                     styleClass="form-control" required="true" readonly="true"
+                                     validatorMessage="Phone is required">
+                            <f:validateRequired/>
+                        </h:inputText>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2 offset-sm-6">
+                            <h:commandButton value="Enregistrer" action="#{transactionController.store}"
+                                             styleClass="btn btn-primary"/>
+                        </div>
+                    </div>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</f:view>
+</html>

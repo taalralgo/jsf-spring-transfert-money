@@ -20,8 +20,8 @@ public class Client
     @Column(length = 9, nullable = false, unique = true)
     private String telephone;
     @Column(nullable = false)
-    private int compte;//La somme sur son compte
-    private int argent_received;//La somme qu'on lui a envoyer
+    private int compte = 0;//La somme sur son compte
+    private int argent_received = 0;//La somme qu'on lui a envoyer
 
     public Client()
     {
