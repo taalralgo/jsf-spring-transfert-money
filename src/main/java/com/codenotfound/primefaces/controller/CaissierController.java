@@ -58,6 +58,7 @@ public class CaissierController
         this.roleId = 0;
         this.pwdChanged = "";
         user = new Utilisateur();
+//        user.setIv(100000);
         user.setArticleContrat("Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une mise en page, le texte définitif venant remplacer le faux-texte dès qu'il est prêt ou que la mise en page est achevée. Généralement, on utilise un texte en faux latin, le Lorem ipsum ou Lipsum.");
         user.setRole(new Role());
     }
@@ -81,7 +82,22 @@ public class CaissierController
             if (pwdChanged.length() < 5)
             {
                 String errorMsg = "Le mot de passe n'est pas valide!";
-                FacesContext.getCurrentInstance().addMessage(user.getPwd(), new FacesMessage("Le mot de passe n'est pas valide!"));
+                FacesContext.getCurrentInstance().addMessage(user.getPwd(), new FacesMessage(errorMsg));
+                return "create";
+            }
+            try
+            {
+                if (user.getIv() < 100000)
+                {
+                    String errorMsg = "Le montant IV doit etre superieure à 100 0000FCFA!";
+                    FacesContext.getCurrentInstance().addMessage(user.getPwd(), new FacesMessage(errorMsg));
+                    return "create";
+                }
+            }
+            catch (Exception e)
+            {
+                String errorMsg = "Le montant IV n'est pas valide!";
+                FacesContext.getCurrentInstance().addMessage(user.getPwd(), new FacesMessage(errorMsg));
                 return "create";
             }
             user.setPwd(bCryptPasswordEncoder.encode(pwdChanged));
@@ -117,6 +133,21 @@ public class CaissierController
 
     public String update()
     {
+        try
+        {
+            if (user.getIv() < 100000)
+            {
+                String errorMsg = "Le montant IV doit etre superieure à 100 0000FCFA!";
+                FacesContext.getCurrentInstance().addMessage(user.getPwd(), new FacesMessage(errorMsg));
+                return "create";
+            }
+        }
+        catch (Exception e)
+        {
+            String errorMsg = "Le montant IV n'est pas valide!";
+            FacesContext.getCurrentInstance().addMessage(user.getPwd(), new FacesMessage(errorMsg));
+            return "create";
+        }
         Role r = roleRepository.findRoleByLibRole("ROLE_CAISSIER");
         if (r != null)
         {
