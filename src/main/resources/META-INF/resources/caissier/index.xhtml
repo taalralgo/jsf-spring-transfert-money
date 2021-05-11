@@ -26,12 +26,16 @@
         <h:form>
             <div class="az-content-body pd-lg-l-40 d-flex flex-column">
                 <div class="az-content-label mg-b-5 py-2">
-                    <h:commandButton value="Ajouter" action="#{userController.create}"
+                    <h:commandButton value="Ajouter" action="#{caissierController.create}"
                                      styleClass="btn btn-primary btnWidth"/>
                 </div>
                 <div class="table-responsive">
-                    <h:dataTable var="u" value="#{userController.users}"
+                    <h:dataTable var="u" value="#{caissierController.users}"
                                  styleClass="table mg-b-0">
+                        <h:column>
+                            <f:facet name="header">Username</f:facet>
+                            <h:outputText value="#{u.code}"/>
+                        </h:column>
                         <h:column>
                             <f:facet name="header">Prenom</f:facet>
                             <h:outputText value="#{u.prenom}"/>
@@ -49,11 +53,15 @@
                             <h:outputText value="#{u.role.libRole}"/>
                         </h:column>
                         <h:column>
+                            <f:facet name="header">IV</f:facet>
+                            <h:outputText value="#{u.iv}"/>
+                        </h:column>
+                        <h:column>
                             <f:facet name="header">Actions</f:facet>
                             <h:commandButton styleClass="btn btn-warning" value="Editer"
-                                             action="#{userController.edit(u)}"/>&nbsp;
+                                             action="#{caissierController.edit(u)}"/>&nbsp;
                             <h:commandButton styleClass="btn btn-danger" value="Supprimer"
-                                             action="#{userController.delete(u)}"/>
+                                             action="#{caissierController.delete(u)}"/>
                         </h:column>
 
                     </h:dataTable>

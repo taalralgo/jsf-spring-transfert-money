@@ -27,20 +27,8 @@
                     <div class="az-content-label mg-b-5 py-2">
                     </div>
                     <div class="form-group">
-                        <h:outputLabel for="role" styleClass="control-label col-sm-4">Role:</h:outputLabel>
-                        <h:selectOneMenu value="#{userController.roleId}" required="true" styleClass="form-control"
-                                         id="role"
-                                         validatorMessage="Role is required">
-                            <f:validateRequired/>
-                            <f:selectItem itemValue="0" itemLabel="Selectionner un role"/>
-                            <f:selectItems value="#{userController.roles}" var="r" itemValue="#{r.id}"
-                                           itemLabel="#{r.libRole}"/>
-                        </h:selectOneMenu>
-
-                    </div>
-                    <div class="form-group">
                         <h:outputLabel for="piece" styleClass="control-label col-sm-4">Numero piece:</h:outputLabel>
-                        <h:inputText id="piece" value="#{userController.user.numeroPiece}"
+                        <h:inputText id="piece" value="#{caissierController.user.numeroPiece}"
                                      styleClass="form-control" required="true"
                                      validatorMessage="Numero de piece is required">
                             <f:validateRequired/>
@@ -48,7 +36,7 @@
                     </div>
                     <div class="form-group">
                         <h:outputLabel for="prenom" styleClass="control-label col-sm-4">Prenom:</h:outputLabel>
-                        <h:inputText id="prenom" value="#{userController.user.prenom}"
+                        <h:inputText id="prenom" value="#{caissierController.user.prenom}"
                                      styleClass="form-control" required="true"
                                      validatorMessage="Prenom is required">
                             <f:validateRequired/>
@@ -56,7 +44,7 @@
                     </div>
                     <div class="form-group">
                         <h:outputLabel for="nom" styleClass="control-label col-sm-4">Nom:</h:outputLabel>
-                        <h:inputText id="nom" value="#{userController.user.nom}"
+                        <h:inputText id="nom" value="#{caissierController.user.nom}"
                                      styleClass="form-control" required="true"
                                      validatorMessage="Nom is required">
                             <f:validateRequired/>
@@ -64,32 +52,48 @@
                     </div>
                     <div class="form-group">
                         <h:outputLabel for="phone" styleClass="control-label col-sm-4">Telephone:</h:outputLabel>
-                        <h:inputText id="phone" value="#{userController.user.telephone}"
+                        <h:inputText id="phone" value="#{caissierController.user.telephone}"
                                      styleClass="form-control" required="true"
                                      validatorMessage="Phone is required">
                             <f:validateRequired/>
                         </h:inputText>
                     </div>
                     <div class="form-group">
-                        <h:outputLabel for="username" styleClass="control-label col-sm-4">Username:</h:outputLabel>
-                        <h:inputText id="username" value="#{userController.user.login}"
+                        <h:outputLabel for="iv" styleClass="control-label col-sm-4">IV:</h:outputLabel>
+                        <h:inputText id="iv" value="#{caissierController.user.iv}"
                                      styleClass="form-control" required="true"
-                                     validatorMessage="Username is required">
+                                     validatorMessage="IV is required">
                             <f:validateRequired/>
                         </h:inputText>
                     </div>
                     <div class="form-group">
                         <h:outputLabel for="password" styleClass="control-label col-sm-4">Mot de passe:</h:outputLabel>
-                        <h:inputSecret id="password" value="#{userController.pwdChanged}"
+                        <h:inputSecret id="password" value="#{caissierController.pwdChanged}"
                                        styleClass="form-control" required="true"
                                        validatorMessage="Password is required">
                             <f:validateRequired/>
                         </h:inputSecret>
                     </div>
+                    <div class="form-group">
+                        <h:outputLabel for="numcontrat" styleClass="control-label col-sm-4">Numero de contrat:</h:outputLabel>
+                        <h:inputText id="numcontrat" value="#{caissierController.user.numeroContrat}"
+                                       styleClass="form-control" required="true"
+                                       validatorMessage="Num contrat is required">
+                            <f:validateRequired/>
+                        </h:inputText>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel for="artcontrat" styleClass="control-label col-sm-4">Article de contrat:</h:outputLabel>
+                        <h:inputTextarea id="artcontrat" value="#{caissierController.user.articleContrat}"
+                                       styleClass="form-control" required="true" readonly="true"
+                                       validatorMessage="Num contrat is required">
+                            <f:validateRequired/>
+                        </h:inputTextarea>
+                    </div>
 
                     <div class="form-group">
                         <div class="col-sm-2 offset-sm-6">
-                            <h:commandButton value="Enregistrer" action="#{userController.store}"
+                            <h:commandButton value="Enregistrer" action="#{caissierController.store}"
                                              styleClass="btn btn-primary"/>
                         </div>
                     </div>

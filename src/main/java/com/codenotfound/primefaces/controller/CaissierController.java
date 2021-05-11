@@ -58,6 +58,7 @@ public class CaissierController
         this.roleId = 0;
         this.pwdChanged = "";
         user = new Utilisateur();
+        user.setArticleContrat("Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une mise en page, le texte définitif venant remplacer le faux-texte dès qu'il est prêt ou que la mise en page est achevée. Généralement, on utilise un texte en faux latin, le Lorem ipsum ou Lipsum.");
         user.setRole(new Role());
     }
 
@@ -85,11 +86,13 @@ public class CaissierController
             }
             user.setPwd(bCryptPasswordEncoder.encode(pwdChanged));
             Role role = roleRepository.findRoleByLibRole("ROLE_CAISSIER");
-            if(role != null)
+            if (role != null)
             {
-                user.setCode(user.getLogin());
+                user.setCode(generateCode(user));
+                user.setLogin(user.getCode());
                 user.setChanged(false);
                 user.setRole(role);
+                user.setAdminId(utilisateurRepository.findByLogin(utils.getConnectedUser()).getId());
                 utilisateurRepository.save(user);
                 return "index?faces-redirect=true";
             }
@@ -106,9 +109,8 @@ public class CaissierController
 
     public String edit(Utilisateur user)
     {
-        this.user = utilisateurRepository.findById(user.getId());
-        this.roleId = this.user.getRole().getId();
-        System.out.println(this.roleId);
+        this.user = user;
+        this.roleId = user.getRole().getId();
         pwdChanged = "";
         return "edit?faces-redirect=true";
     }
@@ -119,6 +121,10 @@ public class CaissierController
         if (r != null)
         {
             user.setRole(r);
+            if(!pwdChanged.equals(""))
+            {
+                user.setPwd(bCryptPasswordEncoder.encode(pwdChanged));
+            }
             utilisateurRepository.save(user);
             init();
             initData();
@@ -205,6 +211,18 @@ public class CaissierController
     public void setPwdChanged(String pwdChanged)
     {
         this.pwdChanged = pwdChanged;
+    }
+
+    public String generateCode(Utilisateur utilisateur)
+    {
+        return utilisateur.getPrenom().toLowerCase().substring(0, 2)
+                + '-'
+                + utilisateur.getNom().toLowerCase().substring(0, 2)
+                + '-'
+                + utilisateur.getTelephone().toLowerCase().substring(0, 2)
+                + '-'
+                + utilisateur.getNumeroPiece().toLowerCase().substring(0, 4);
+//        return codeGenerate;
     }
 }
 
