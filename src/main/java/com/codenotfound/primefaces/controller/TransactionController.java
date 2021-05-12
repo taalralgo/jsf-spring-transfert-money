@@ -32,7 +32,7 @@ public class TransactionController
     private Utilisateur connectedUser;
     private List<Transaction> transactions;
     private Transaction transaction;
-    private Client receiver;
+    private Client emetteur;
 
     @PostConstruct
     public void init()
@@ -42,7 +42,7 @@ public class TransactionController
 
     private void initData()
     {
-        receiver = new Client();
+        emetteur = new Client();
         transaction = new Transaction();
     }
 

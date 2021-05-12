@@ -96,4 +96,6 @@ public class Client
     {
         this.argent_received = argent_received;
     }
+
+
 }
