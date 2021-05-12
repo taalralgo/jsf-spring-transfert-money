@@ -22,6 +22,7 @@ public class Client
     @Column(nullable = false)
     private int compte = 0;//La somme sur son compte
     private int argent_received = 0;//La somme qu'on lui a envoyer
+    private int adminId;//La somme qu'on lui a envoyer
 
     public Client()
     {
@@ -97,5 +98,13 @@ public class Client
         this.argent_received = argent_received;
     }
 
+    public int getAdminId()
+    {
+        return adminId;
+    }
 
+    public void setAdminId(int adminId)
+    {
+        this.adminId = adminId;
+    }
 }
