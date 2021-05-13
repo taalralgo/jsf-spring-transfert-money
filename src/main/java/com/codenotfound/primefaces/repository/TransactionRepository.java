@@ -11,5 +11,5 @@ public interface TransactionRepository extends JpaRepository<Transaction,Long>
 {
     public List<Transaction> findAllByUtilisateur(Utilisateur utilisateur);
     public List<Transaction> findAllByAdminId(int adminId);
-    public List<Transaction> findTransactionByCode(String code);
+    public List<Transaction> findTransactionsByCode(String code);
 }

@@ -23,14 +23,27 @@
 <ui:composition template="/layout/base.xhtml">
     <ui:define name="contenu">
         <!--            PRIMEFACES-->
-        <h:form>
+        <h:form id="transactionIndex">
             <div class="az-content-body pd-lg-l-40 d-flex flex-column">
                 <div class="az-content-label mg-b-5 py-2">
                     <h:commandButton value="Effectuer une transaction" action="#{transactionController.create}"
                                      styleClass="btn btn-primary btnWidth"/>
                 </div>
+                <div class="col-sm-3 offset-sm-9">
+                    <div class="form-group">
+                        <h:outputLabel for="search"
+                                       styleClass="control-label col-sm-4">Rechercher:</h:outputLabel>
+                        <h:inputText id="search" value="#{transactionController.search}"
+                                     styleClass="form-control" required="false">
+                            <f:ajax event="blur" listener="#{transactionController.getTransactionsBySearch}"
+                                    render=":transactionIndex :transactionIndex:table
+                                            :transactionIndex:datatable"/>
+                            <f:validateRequired/>
+                        </h:inputText>
+                    </div>
+                </div>
                 <div class="table-responsive">
-                    <h:dataTable var="t" value="#{transactionController.transactions}"
+                    <h:dataTable var="t" value="#{transactionController.transactionsBySearch}"
                                  styleClass="table mg-b-0">
                         <h:column>
                             <f:facet name="header">Caissier:</f:facet>

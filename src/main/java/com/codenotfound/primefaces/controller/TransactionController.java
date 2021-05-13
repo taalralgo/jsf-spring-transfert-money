@@ -34,9 +34,11 @@ public class TransactionController
     private Utils utils;
     private Utilisateur connectedUser;
     private List<Transaction> transactions;
+    private List<Transaction> transactionsBySearch;
     private Transaction transaction;
     private Client emetteur;
     private String transactionValidatorMsg;
+    private String search;
 
     @PostConstruct
     public void init()
@@ -49,6 +51,7 @@ public class TransactionController
         emetteur = new Client();
         transaction = new Transaction();
         transactionValidatorMsg = "";
+        search = "";
     }
 
     public String create()
@@ -220,6 +223,18 @@ public class TransactionController
         return transactions;
     }
 
+    public List<Transaction> getTransactionsBySearch()
+    {
+        transactionsBySearch = transactionRepository.findTransactionsByCode(this.search);
+        transactions = transactionsBySearch;
+        return transactionsBySearch;
+    }
+
+    public void setTransactionsBySearch(List<Transaction> transactionsBySearch)
+    {
+        this.transactionsBySearch = transactionsBySearch;
+    }
+
     public void setTransactions(List<Transaction> transactions)
     {
         this.transactions = transactions;
@@ -251,6 +266,16 @@ public class TransactionController
     public void setTransactionValidatorMsg(String transactionValidatorMsg)
     {
         this.transactionValidatorMsg = transactionValidatorMsg;
+    }
+
+    public String getSearch()
+    {
+        return search;
+    }
+
+    public void setSearch(String search)
+    {
+        this.search = search;
     }
 }
 
