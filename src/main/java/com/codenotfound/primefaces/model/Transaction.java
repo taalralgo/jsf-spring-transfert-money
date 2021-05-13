@@ -12,7 +12,7 @@ public class Transaction
     @Column(length = 255, nullable = false)
     private String code;//Code generer lors de l'envoi pour pouvoir recuperer
     @Column(length = 10, nullable = false)
-    private String type; //transaction de type envoi ou retrait
+    private String type = "envoi"; //transaction de type envoi ou retrait
     @ManyToOne(fetch = FetchType.EAGER)
     private Utilisateur utilisateur;//Le caissier qui a effectuer la transaction
     @Column(nullable = false)
@@ -21,6 +21,7 @@ public class Transaction
     private String emetteurPrenom;
     private String emetteurNom;
     private String emetteurTelephone;
+    private int emetteurSolde;
 
 //    private Long receverId;
     private String receverNumpiece;
@@ -32,7 +33,7 @@ public class Transaction
     private int adminId;
     private Date createdAt = new Date();
     @Column(nullable = true)
-    private Date dateTretrait = new Date();
+    private Date dateTretrait;
     private boolean isRetirer = false;
 
     public Transaction()
@@ -218,5 +219,21 @@ public class Transaction
     {
         isRetirer = retirer;
     }
+
+    public int getEmetteurSolde()
+    {
+        return emetteurSolde;
+    }
+
+    public void setEmetteurSolde(int emetteurSolde)
+    {
+        this.emetteurSolde = emetteurSolde;
+    }
+
+    public boolean getIsRetirer()
+    {
+        return isRetirer;
+    }
+
 }
 

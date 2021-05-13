@@ -9,4 +9,6 @@ import java.util.List;
 public interface ClientRepository extends JpaRepository<Client,Long>
 {
     public List<Client> findAllByAdminId(int adminId);
+    public Client findClientByNumeroPiece(String numpiece);
+    public Client findClientById(Long id);
 }

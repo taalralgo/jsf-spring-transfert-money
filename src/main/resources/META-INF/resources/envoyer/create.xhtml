@@ -23,7 +23,7 @@
         <ui:define name="contenu">
             <div class="container">
                 <div class="col-sm-2 offset-sm-5">
-                    <h5>IV: #{transactionController.connectedUser.iv}</h5>
+                    <h5>IV: #{transactionController.connectedUser.iv} FCFA</h5>
                 </div>
             </div>
             <h:form id="createTransactionForm" styleClass="form-horizontal">
@@ -39,6 +39,9 @@
                                 <h:inputText id="piece" value="#{transactionController.transaction.emetteurNumpiece}"
                                              styleClass="form-control" required="true"
                                              validatorMessage="Numero de piece is required">
+                                    <f:ajax event="blur" listener="#{transactionController.getClientByNumpiece}"
+                                            render=":createTransactionForm:prenom :createTransactionForm:nom
+                                            :createTransactionForm:phone"/>
                                     <f:validateRequired/>
                                 </h:inputText>
                             </div>
@@ -112,21 +115,21 @@
                     </div>
                     <div class="form-group">
                         <h:outputLabel for="montant"
-                                       styleClass="control-label col-sm-4">Montant:</h:outputLabel>
+                                       styleClass="control-label col-sm-4">Montant à envoyer:</h:outputLabel>
                         <h:inputText id="montant"
                                      value="#{transactionController.transaction.montant}"
                                      styleClass="form-control" required="true"
                                      validatorMessage="Montant is required">
                             <f:validateRequired/>
-                            <f:convertNumber type="number" integerOnly="true" />
+                            <f:convertNumber type="number" integerOnly="true"/>
                         </h:inputText>
                     </div>
 
 
                     <div class="form-group">
                         <div class="col-sm-2 offset-sm-5">
-                            <h:commandButton value="Valider" action="#{transactionController.store}"
-                                             styleClass="btn btn-primary"/>
+                            <h:commandButton value="Valider la transaction" action="#{transactionController.store}"
+                                             styleClass="btn btn-outline-success"/>
                         </div>
                     </div>
                 </div>
