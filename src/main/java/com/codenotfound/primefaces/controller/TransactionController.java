@@ -73,7 +73,7 @@ public class TransactionController
                     transactionRepository.save(this.transaction);
                     emetteur.setCompte(emetteur.getCompte() - transaction.getMontant());
                     clientRepository.save(emetteur);
-                    connected.setIv(connected.getIv() - this.transaction.getMontant());
+//                    connected.setIv(connected.getIv() - this.transaction.getMontant());
                     initData();
                     return "index?faces-redirect=true";
                 }
