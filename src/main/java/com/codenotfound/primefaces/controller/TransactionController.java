@@ -50,6 +50,8 @@ public class TransactionController
     {
         emetteur = new Client();
         transaction = new Transaction();
+        transactions = null;
+        transactionsBySearch = null;
         transactionValidatorMsg = "";
         search = "";
     }

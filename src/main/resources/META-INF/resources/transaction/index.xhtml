@@ -23,12 +23,12 @@
 <ui:composition template="/layout/base.xhtml">
     <ui:define name="contenu">
         <!--            PRIMEFACES-->
-        <h:form id="transactionIndex">
+        <h:form>
+            <h:commandButton value="Effectuer une transaction" action="#{transactionController.create}"
+                             styleClass="btn btn-primary btnWidth"/>
+        </h:form>
+        <h:form id="createEnvoyerForm" styleClass="form-horizontal">
             <div class="az-content-body pd-lg-l-40 d-flex flex-column">
-                <div class="az-content-label mg-b-5 py-2">
-                    <h:commandButton value="Effectuer une transaction" action="#{transactionController.create}"
-                                     styleClass="btn btn-primary btnWidth"/>
-                </div>
                 <div class="col-sm-3 offset-sm-9">
                     <div class="form-group">
                         <h:outputLabel for="search"
@@ -47,7 +47,8 @@
                                  styleClass="table mg-b-0">
                         <h:column>
                             <f:facet name="header">Caissier:</f:facet>
-                            <h:outputText value="#{t.utilisateur.numeroPiece} #{t.utilisateur.prenom} #{t.utilisateur.nom}"/>
+                            <h:outputText
+                                    value="#{t.utilisateur.numeroPiece} #{t.utilisateur.prenom} #{t.utilisateur.nom}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">De: #{t.emetteurNumpiece}</f:facet>
