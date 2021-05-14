@@ -51,6 +51,7 @@
                                 Dashboard
                             </a>
                         </li>
+                        <h:panelGroup rendered="#{transactionController.connectedUser.role.libRole != 'ROLE_SUPER'}">
                         <li class="nav-item">
                             <a href="/client/index.xhtml" class="nav-link">
                                 <i class="typcn typcn-chart-bar-outline"></i>
@@ -69,18 +70,24 @@
                                 Transactions
                             </a>
                         </li>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{transactionController.connectedUser.role.libRole == 'ROLE_ADMIN'}">
                         <li class="nav-item">
                             <a href="/caissier/index.xhtml" class="nav-link">
                                 <i class="typcn typcn-chart-bar-outline"></i>
                                 Caissiers
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="/users/index.xhtml" class="nav-link">
-                                <i class="typcn typcn-chart-bar-outline"></i>
-                                Utilisateurs
-                            </a>
-                        </li>
+                        </h:panelGroup>
+                        <h:panelGroup
+                                rendered="#{transactionController.connectedUser.role.libRole == 'ROLE_SUPER'}">
+                            <li class="nav-item">
+                                <a href="/users/index.xhtml" class="nav-link">
+                                    <i class="typcn typcn-chart-bar-outline"></i>
+                                    Utilisateurs
+                                </a>
+                            </li>
+                        </h:panelGroup>
                     </ul>
                 </div><!-- az-header-menu -->
                 <div class="az-header-right">

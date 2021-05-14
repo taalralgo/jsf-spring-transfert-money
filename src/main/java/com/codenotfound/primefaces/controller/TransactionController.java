@@ -69,8 +69,15 @@ public class TransactionController
                 if (emetteur != null)
                 {
                     this.transaction.setCode(this.randomString(10));
-                    this.transaction.setAdminId(getConnectedUser().getAdminId());
                     Utilisateur connected = getConnectedUser();
+                    if(connected.getRole().getLibRole() == "ROLE_ADMIN")
+                    {
+                        this.transaction.setAdminId(connected.getId());
+                    }
+                    else
+                    {
+                        this.transaction.setAdminId(getConnectedUser().getAdminId());
+                    }
                     this.transaction.setUtilisateur(connected);
                     transactionRepository.save(this.transaction);
                     emetteur.setCompte(emetteur.getCompte() - transaction.getMontant());
