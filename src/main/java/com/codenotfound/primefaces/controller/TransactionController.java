@@ -140,8 +140,9 @@ public class TransactionController
     {
         try
         {
-            transactionRepository.delete(transaction);
-            return "index?faces-redirect=true";
+            initData();
+            this.transaction = transaction;
+            return "retrait-print?faces-redirect=true";
         }
         catch (Exception ex)
         {
