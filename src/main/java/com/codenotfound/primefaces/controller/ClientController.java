@@ -39,6 +39,7 @@ public class ClientController
     private int compte;
     @Autowired
     private Utils utils;
+    private Utilisateur connectedUser;
 
     @PostConstruct
     public void init()
@@ -106,6 +107,9 @@ public class ClientController
         if (this.compte >= 1000)
         {
             this.client.setCompte(this.compte + this.client.getCompte());
+            Utilisateur connected = getConnectedUser();
+            connected.setIv(connected.getIv() - this.compte);
+            utilisateurRepository.save(connected);
             clientRepository.save(this.client);
             initData();
             return "index?faces-redirect=true";
@@ -158,6 +162,12 @@ public class ClientController
     public void setCompte(int compte)
     {
         this.compte = compte;
+    }
+
+    public Utilisateur getConnectedUser()
+    {
+        connectedUser = utilisateurRepository.findByLogin(utils.getConnectedUser());
+        return connectedUser;
     }
 }
 

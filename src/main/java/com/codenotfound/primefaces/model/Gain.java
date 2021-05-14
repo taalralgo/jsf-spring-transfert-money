@@ -18,6 +18,7 @@ public class Gain
     private double gainCaissier2;
     private double etat;
     private Date createdAt;
+    private boolean solded = false;
 
     public Gain()
     {
@@ -112,5 +113,15 @@ public class Gain
     public void setCreatedAt(Date createdAt)
     {
         this.createdAt = createdAt;
+    }
+
+    public boolean isSolded()
+    {
+        return solded;
+    }
+
+    public void setSolded(boolean solded)
+    {
+        this.solded = solded;
     }
 }
