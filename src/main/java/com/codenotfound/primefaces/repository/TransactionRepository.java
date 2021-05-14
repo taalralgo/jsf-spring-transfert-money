@@ -10,6 +10,7 @@ import java.util.List;
 public interface TransactionRepository extends JpaRepository<Transaction,Long>
 {
     public List<Transaction> findAllByUtilisateur(Utilisateur utilisateur);
+    public List<Transaction> findAllByUtilisateurAndIsRetirerOrderByCreatedAtDesc(Utilisateur utilisateur, boolean isretirer);
     public List<Transaction> findAllByAdminId(int adminId);
     public List<Transaction> findTransactionsByCode(String code);
 }
