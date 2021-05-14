@@ -15,6 +15,8 @@ public class Transaction
     private String type = "envoi"; //transaction de type envoi ou retrait
     @ManyToOne(fetch = FetchType.EAGER)
     private Utilisateur utilisateur;//Le caissier qui a effectuer la transaction
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Utilisateur caissier;//Le caissier qui retire la transaction
     @Column(nullable = false)
     private Long idEmetteur;//Id du client qui effectue la transaction
     private String emetteurNumpiece;
@@ -30,6 +32,7 @@ public class Transaction
     private String receverTelephone;
 
     private int montant;
+    private double montantAretirer;
     private int adminId;
     private Date createdAt = new Date();
     @Column(nullable = true)
@@ -235,5 +238,24 @@ public class Transaction
         return isRetirer;
     }
 
+    public Utilisateur getCaissier()
+    {
+        return caissier;
+    }
+
+    public void setCaissier(Utilisateur caissier)
+    {
+        this.caissier = caissier;
+    }
+
+    public double getMontantAretirer()
+    {
+        return montantAretirer;
+    }
+
+    public void setMontantAretirer(double montantAretirer)
+    {
+        this.montantAretirer = montantAretirer;
+    }
 }
 

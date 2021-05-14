@@ -1,14 +1,8 @@
 package com.codenotfound.primefaces.controller;
 
 import com.codenotfound.primefaces.config.Utils;
-import com.codenotfound.primefaces.model.Client;
-import com.codenotfound.primefaces.model.Role;
-import com.codenotfound.primefaces.model.Transaction;
-import com.codenotfound.primefaces.model.Utilisateur;
-import com.codenotfound.primefaces.repository.ClientRepository;
-import com.codenotfound.primefaces.repository.RoleRepository;
-import com.codenotfound.primefaces.repository.TransactionRepository;
-import com.codenotfound.primefaces.repository.UtilisateurRepository;
+import com.codenotfound.primefaces.model.*;
+import com.codenotfound.primefaces.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -17,6 +11,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import java.util.Date;
 import java.util.List;
 
 @ManagedBean
@@ -30,6 +25,8 @@ public class TransactionController
     private TransactionRepository transactionRepository;
     @Autowired
     private ClientRepository clientRepository;
+    @Autowired
+    private GainRepository gainRepository;
     @Autowired
     private Utils utils;
     private Utilisateur connectedUser;
@@ -105,7 +102,33 @@ public class TransactionController
     public String retirer(Transaction transaction)
     {
         this.transaction = transaction;
-        return "retirer?faces-redirect=true";
+        Utilisateur connected = getConnectedUser();
+        this.transaction.setRetirer(true);
+        connected.setIv(connected.getIv() + this.transaction.getMontant());
+        this.transaction.setDateTretrait(new Date());
+        this.transaction.setCaissier(connected);
+        transactionRepository.save(this.transaction);
+        utilisateurRepository.save(connected);
+        double taux = (double) 5/100;
+        double gainTaux = this.transaction.getMontant() * taux;
+        //Montant a retirer
+        double montant = this.transaction.getMontant() - gainTaux;
+        this.transaction.setMontantAretirer(montant);
+        //CALCULE POUR LE SYSTEME
+        double systeme = (double)40/100 * gainTaux;
+        double etat = (double)20/100 * gainTaux;
+        double caissier1 = (double)20/100 * gainTaux;
+        double caissier2 = (double)20/100 * gainTaux;
+        Gain gain = new Gain();
+        gain.setCaissier1(this.transaction.getUtilisateur());
+        gain.setCaissier2(connectedUser);
+        gain.setSysteme(systeme);
+        gain.setGainCaissier1(caissier1);
+        gain.setGainCaissier2(caissier2);
+        gain.setEtat(etat);
+        gain.setCreatedAt(new Date());
+        gainRepository.save(gain);
+        return "index?faces-redirect=true";
     }
 
     public String update()
