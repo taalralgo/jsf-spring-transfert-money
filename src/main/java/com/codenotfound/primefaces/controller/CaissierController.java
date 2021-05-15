@@ -5,6 +5,7 @@ import com.codenotfound.primefaces.model.Role;
 import com.codenotfound.primefaces.model.Utilisateur;
 import com.codenotfound.primefaces.repository.RoleRepository;
 import com.codenotfound.primefaces.repository.UtilisateurRepository;
+import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,8 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import java.io.*;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +41,7 @@ public class CaissierController
     private int roleId;
     private List<Role> roles;
     private String pwdChanged;
+    private UploadedFile file;
 
     @GetMapping("/caissiers")
     public String users()
@@ -61,6 +65,7 @@ public class CaissierController
 //        user.setIv(100000);
         user.setArticleContrat("Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une mise en page, le texte définitif venant remplacer le faux-texte dès qu'il est prêt ou que la mise en page est achevée. Généralement, on utilise un texte en faux latin, le Lorem ipsum ou Lipsum.");
         user.setRole(new Role());
+        file = null;
     }
 
     private void resetData()
@@ -104,6 +109,24 @@ public class CaissierController
             Role role = roleRepository.findRoleByLibRole("ROLE_CAISSIER");
             if (role != null)
             {
+                if (file != null)
+                {
+                    try
+                    {
+                        copyFile(file.getFileName(), file.getInputstream());
+                        user.setPhoto("/template/img/"+file.getFileName());
+                    }
+                    catch (IOException e)
+                    {
+                        user.setPhoto("/template/img/noimg.jpg");
+                        System.out.println(e.getMessage());
+                        e.printStackTrace();
+                    }
+                }
+                else
+                {
+                    user.setPhoto("/template/img/noimg.jpg");
+                }
                 user.setCode(generateCode(user));
                 user.setLogin(user.getCode());
                 user.setChanged(false);
@@ -118,10 +141,36 @@ public class CaissierController
         catch (Exception ex)
         {
             String errorMsg = ex.getMessage();
-            FacesContext.getCurrentInstance().addMessage(user.getPwd(), new FacesMessage(errorMsg));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(errorMsg));
             return "create";
         }
     }
+
+    public void copyFile(String fileName, InputStream in) {
+        try {
+
+            // write the inputStream to a FileOutputStream
+            String uploadPath = "C://Users//ddthe//Downloads//uploads//";
+            OutputStream out = new FileOutputStream(new File("./src/main/resources/META-INF/resources/template/img/" + fileName));
+//            OutputStream out = new FileOutputStream(new File("C://Users//ddthe//Downloads//uploads//" + fileName));
+
+            int read = 0;
+            byte[] bytes = new byte[1024];
+
+            while ((read = in.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+
+            in.close();
+            out.flush();
+            out.close();
+
+            System.out.println("New file created!");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 
     public String edit(Utilisateur user)
     {
@@ -152,7 +201,7 @@ public class CaissierController
         if (r != null)
         {
             user.setRole(r);
-            if(!pwdChanged.equals(""))
+            if (!pwdChanged.equals(""))
             {
                 user.setPwd(bCryptPasswordEncoder.encode(pwdChanged));
             }
@@ -254,6 +303,16 @@ public class CaissierController
                 + '-'
                 + utilisateur.getNumeroPiece().toLowerCase().substring(0, 4);
 //        return codeGenerate;
+    }
+
+    public UploadedFile getFile()
+    {
+        return file;
+    }
+
+    public void setFile(UploadedFile file)
+    {
+        this.file = file;
     }
 }
 

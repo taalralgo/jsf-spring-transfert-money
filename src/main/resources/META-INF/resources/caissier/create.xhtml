@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
 <h:head>
     <title>Transfert d'argent</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
@@ -21,10 +22,19 @@
 <f:view>
     <ui:composition template="/layout/base.xhtml">
         <ui:define name="contenu">
-            <h:form id="createUserForm" styleClass="form-horizontal">
+            <h:form id="createUserForm" styleClass="form-horizontal" enctype="multipart/form-data">
                 <h:messages/>
                 <div class="az-content-body pd-lg-l-40 d-flex flex-column">
                     <div class="az-content-label mg-b-5 py-2">
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel for="file" styleClass="control-label col-sm-4">Image:</h:outputLabel>
+                        <p:fileUpload id="file" value="#{caissierController.file}" mode="simple" skinSimple="true"
+                                      fileUploadListener="#{caissierController.handleFileUpload}"
+                                      required="true">
+                            <h:message for="file" style="color: red;"/>
+                            <f:validateRequired/>
+                        </p:fileUpload>
                     </div>
                     <div class="form-group">
                         <h:outputLabel for="piece" styleClass="control-label col-sm-4">Numero piece:</h:outputLabel>
@@ -64,7 +74,7 @@
                                      styleClass="form-control" required="true"
                                      validatorMessage="IV is required">
                             <f:validateRequired/>
-                            <f:convertNumber type="number" integerOnly="true" />
+                            <f:convertNumber type="number" integerOnly="true"/>
                         </h:inputText>
                     </div>
                     <div class="form-group">
@@ -76,18 +86,20 @@
                         </h:inputSecret>
                     </div>
                     <div class="form-group">
-                        <h:outputLabel for="numcontrat" styleClass="control-label col-sm-4">Numero de contrat:</h:outputLabel>
+                        <h:outputLabel for="numcontrat"
+                                       styleClass="control-label col-sm-4">Numero de contrat:</h:outputLabel>
                         <h:inputText id="numcontrat" value="#{caissierController.user.numeroContrat}"
-                                       styleClass="form-control" required="true"
-                                       validatorMessage="Num contrat is required">
+                                     styleClass="form-control" required="true"
+                                     validatorMessage="Num contrat is required">
                             <f:validateRequired/>
                         </h:inputText>
                     </div>
                     <div class="form-group">
-                        <h:outputLabel for="artcontrat" styleClass="control-label col-sm-4">Article de contrat:</h:outputLabel>
+                        <h:outputLabel for="artcontrat"
+                                       styleClass="control-label col-sm-4">Article de contrat:</h:outputLabel>
                         <h:inputTextarea id="artcontrat" value="#{caissierController.user.articleContrat}"
-                                       styleClass="form-control" required="true" readonly="true"
-                                       validatorMessage="Num contrat is required">
+                                         styleClass="form-control" required="true" readonly="true"
+                                         validatorMessage="Num contrat is required">
                             <f:validateRequired/>
                         </h:inputTextarea>
                     </div>

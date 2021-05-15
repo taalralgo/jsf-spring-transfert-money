@@ -118,6 +118,7 @@
                             <div class="az-notification-list">
                                 <div class="media new">
                                     <div class="az-img-user">
+<!--                                        <img src="/template/img/faces/face2.jpg" alt=""/>-->
                                         <img src="/template/img/faces/face2.jpg" alt=""/>
                                     </div>
                                     <div class="media-body">
@@ -170,7 +171,9 @@
                     </div><!-- az-header-notification -->
                     <div class="dropdown az-profile-menu">
                         <a href="" class="az-img-user">
-                            <img src="/template/img/faces/face1.jpg" alt=""/>
+                            <img src="#{transactionController.connectedUser.photo}" alt=""/>
+<!--                            <img src="/template/#{transactionController.connectedUser.photo}" alt=""/>-->
+<!--                            <img src="/template/img/faces/face1.jpg" alt=""/>-->
                         </a>
                         <div class="dropdown-menu">
                             <div class="az-dropdown-header d-sm-none">
@@ -180,10 +183,11 @@
                             </div>
                             <div class="az-header-profile">
                                 <div class="az-img-user">
-                                    <img src="/template/img/faces/face1.jpg" alt=""/>
+<!--                                    <img src="/template/img/faces/face1.jpg" alt=""/>-->
+                                    <img src="#{transactionController.connectedUser.photo}" alt=""/>
                                 </div><!-- az-img-user -->
-                                <h6>Aziana Pechon</h6>
-                                <span>Premium Member</span>
+                                <h6>#{transactionController.connectedUser.prenom} #{transactionController.connectedUser.nom}</h6>
+                                <span>Connecté</span>
                             </div><!-- az-header-profile -->
 
                             <a href="" class="dropdown-item">
