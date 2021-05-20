@@ -11,4 +11,5 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur,Integer
     public Utilisateur findById(int id);
     public Utilisateur findByNumeroPiece(String numeroPiece);
     public List<Utilisateur> findByAdminId(int id);
+    public List<Utilisateur> findAllByRole_LibRoleEquals(String rolename);
 }
