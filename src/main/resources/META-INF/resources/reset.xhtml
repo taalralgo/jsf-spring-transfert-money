@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+    <title>Reset password</title>
+    <h:outputStylesheet name="/template/lib/fontawesome-free/css/all.min.css"/>
+    <h:outputStylesheet name="/template/lib/ionicons/css/ionicons.min.css"/>
+    <h:outputStylesheet name="/template/lib/typicons.font/typicons.css"/>
+    <h:outputStylesheet name="/template/css/azia.css"/>
+
+</h:head>
+
+<h:body styleClass="az-body">
+    <div class="az-signin-wrapper">
+        <div class="az-card-signin">
+            <div class="az-signin-header">
+                <h2>Premiere connexion!</h2>
+                <h4>Veuillez changer votre mot de passe</h4>
+                <p:outputLabel value="#{userController.error}" style="color: red"
+                                   rendered="${param['error']}"/>
+
+                <form method="post" action="/reset/password">
+                    <div class="form-group">
+                        <label>Ancien mot de passe</label>
+                        <p:password id="password" class="form-control" placeholder="Ancien mot de passe"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Nouveau mot de passe</label>
+                        <p:password id="newpassword" class="form-control" placeholder="Nouveau mot de passe"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Confirmation</label>
+                        <p:password id="confirm" class="form-control" placeholder="Confirmation"/>
+                    </div>
+                    <button class="btn btn-az-primary btn-block">Reset</button>
+                </form>
+            </div>
+            <div class="az-signin-footer">
+                <p>Vous avez changé d'avis? <a href="/helloworld.xhtml">Accueil</a></p>
+            </div>
+        </div>
+    </div>
+
+    <h:outputScript name="/template/lib/jquery/jquery.min.js"/>
+    <h:outputScript name="/template/lib/bootstrap/js/bootstrap.bundle.min.js"/>
+    <h:outputScript name="/template/lib/ionicons/ionicons.js"/>
+    <h:outputScript name="/template/js/azia.js"/>
+</h:body>
+</html>

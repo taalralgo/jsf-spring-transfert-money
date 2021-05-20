@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+    <title>Transfert d'argent</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <!-- vendor css -->
+    <link rel="stylesheet" href="/META-INF/resources/template/lib/fontawesome-free/css/all.min.css"/>
+    <link rel="stylesheet" href="/META-INF/resources/template/lib/ionicons/css/ionicons.min.css"/>
+    <link rel="stylesheet" href="/META-INF/resources/template/lib/typicons.font/typicons.css"/>
+    <link rel="stylesheet" href="/META-INF/resources/template/lib/flag-icon-css/css/flag-icon.min.css"/>
+
+    <!-- azia CSS -->
+    <h:outputStylesheet name="/template/css/azia.css"/>
+</h:head>
+<!--<f:view>-->
+<body>
+<ui:composition template="/layout/base.xhtml">
+    <ui:define name="contenu">
+        <!--            PRIMEFACES-->
+        <h:form>
+            <div class="az-content-body pd-lg-l-40 d-flex flex-column">
+                <div class="table-responsive">
+                    <h:dataTable var="t" value="#{operationController.transactions}"
+                                 styleClass="table mg-b-0">
+                        <h:column>
+                            <f:facet name="header">Caissier:</f:facet>
+                            <h:outputText
+                                    value="#{t.utilisateur.numeroPiece}: #{t.utilisateur.prenom} #{t.utilisateur.nom}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">De: #{t.emetteurNumpiece}</f:facet>
+                            <h:outputText value="#{t.emetteurNumpiece}: #{t.emetteurPrenom} #{t.emetteurNom}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">A: #{t.receverNumpiece}</f:facet>
+                            <h:outputText value="#{t.receverNumpiece}: #{t.receverPrenom} #{t.receverNom}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Montant</f:facet>
+                            <h:outputText value="#{t.montant}FCFA"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Date</f:facet>
+                            <h:outputText value="#{t.createdAt}">
+                                <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Statut</f:facet>
+                            <h:outputText value="#{t.isRetirer == true ? 'Retirer' : 'Non retirer'}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Actions</f:facet>
+                            <h:commandButton styleClass="btn btn-outline-success" value="Imprimer"
+                                             action="#{operationController.envoiePrint(t)}"/>
+                        </h:column>
+
+                    </h:dataTable>
+                </div>
+            </div>
+        </h:form>
+        <!--  ENDPRIMEFACES-->
+    </ui:define>
+</ui:composition>
+</body>
+<!--</f:view>-->
+</html>

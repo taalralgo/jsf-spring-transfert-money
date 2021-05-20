@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+    <title>Transfert d'argent</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <!-- Bootstrap cdn 3.3.7 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+
+    <!-- Custom font montseraat -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700" rel="stylesheet"/>
+
+    <!-- azia CSS -->
+    <h:outputStylesheet name="/css/facture.css"/>
+</h:head>
+<!--<f:view>-->
+<body>
+<section class="back">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="invoice-wrapper">
+                    <div class="invoice-top">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="invoice-top-left">
+                                    <h2>#{operationController.transaction.emetteurPrenom} #{operationController.transaction.emetteurNom}</h2>
+                                    <h3>Mat: #{operationController.transaction.emetteurNumpiece}</h3>
+                                    <h3>Tel: #{operationController.transaction.emetteurTelephone}</h3>
+                                    <h5>Type: Envoie</h5>
+                                    <h5>Code de retrait: #{operationController.transaction.code}</h5>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="invoice-top-right">
+                                    <h2>#{operationController.transaction.receverPrenom} #{operationController.transaction.receverNom}</h2>
+                                    <h3>Mat: #{operationController.transaction.receverNumpiece}</h3>
+                                    <h3>#{operationController.transaction.receverTelephone}</h3>
+                                    <h5>Type: Retrait</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="invoice-bottom">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="task-table-wrapper">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>DESCRIPTION</th>
+                                            <th>DATE</th>
+                                            <th>MONTANT</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="desc">
+                                                <h5>Operation de type envoie.</h5>
+                                            </td>
+                                            <!--                                            <td><h4>#{operationController.transaction.dateTretrait}</h4></td>-->
+                                            <td><h4>
+                                                <h:outputText value="#{operationController.transaction.dateTretrait}">
+                                                    <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                                                </h:outputText>
+                                            </h4></td>
+                                            <td><h4>#{operationController.transaction.montant}</h4></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-md-12">
+                                <div class="invoice-bottom-total">
+                                    <div class="col-sm-8 no-padding">
+                                        <div class="sub-total-box">
+                                            <h6>Taxe</h6>
+                                            <h5>5%</h5>
+                                        </div>
+                                        <div class="add-box">
+                                            <h3>soit</h3>
+                                        </div>
+                                        <div class="tax-box">
+                                            <h5>#{operationController.transaction.montant - operationController.transaction.montantAretirer} FCFA</h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 no-padding">
+                                        <div class="total-box">
+                                            <h6>TOTAL</h6>
+                                            <h3>#{operationController.transaction.montantAretirer} FCFA</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-xs-12">
+                                <hr class="divider"/>
+                            </div>
+                            <div class="col-sm-4">
+                                <h6 class="text-left">Daouda S. THERA</h6>
+                            </div>
+                            <div class="col-sm-4">
+                                <h6 class="text-center">thera@acan.email</h6>
+                            </div>
+                            <div class="col-sm-4">
+                                <h6 class="text-right">78 164 69 93</h6>
+                            </div>
+                        </div>
+                        <div class="bottom-bar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- jquery slim version 3.2.1 minified -->
+<script type="javascript" src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script type="javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+    // window.print();
+    window.onafterprint = function () {
+        window.location.href = "/operation/envoie.xhtml";
+    }
+</script>
+</body>
+</html>

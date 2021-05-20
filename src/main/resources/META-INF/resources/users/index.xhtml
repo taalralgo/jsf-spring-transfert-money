@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+    <title>Transfert d'argent</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <!-- vendor css -->
+    <link rel="stylesheet" href="/template/lib/fontawesome-free/css/all.min.css"/>
+    <link rel="stylesheet" href="/template/lib/ionicons/css/ionicons.min.css"/>
+    <link rel="stylesheet" href="/template/lib/typicons.font/typicons.css"/>
+    <link rel="stylesheet" href="/template/lib/flag-icon-css/css/flag-icon.min.css"/>
+
+    <!-- azia CSS -->
+    <h:outputStylesheet name="/template/css/azia.css"/>
+</h:head>
+<!--<f:view>-->
+<body>
+<ui:composition template="/layout/base.xhtml">
+    <ui:define name="contenu">
+        <!--            PRIMEFACES-->
+        <h:form>
+            <div class="az-content-body pd-lg-l-40 d-flex flex-column">
+                <div class="az-content-label mg-b-5 py-2">
+                    <h:commandButton value="Ajouter" action="#{userController.create}"
+                                     styleClass="btn btn-primary btnWidth"/>
+                </div>
+                <div class="table-responsive">
+                    <h:dataTable var="u" value="#{userController.users}"
+                                 styleClass="table mg-b-0">
+                        <h:column>
+                            <f:facet name="header">Prenom</f:facet>
+                            <h:outputText value="#{u.prenom}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Nom</f:facet>
+                            <h:outputText value="#{u.nom}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Telephone</f:facet>
+                            <h:outputText value="#{u.telephone}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Role</f:facet>
+                            <h:outputText value="#{u.role.libRole}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Actions</f:facet>
+                            <h:commandButton styleClass="btn btn-warning" value="Editer"
+                                             action="#{userController.edit(u)}"/>&nbsp;
+                            <h:commandButton styleClass="btn btn-danger" value="Supprimer"
+                                             action="#{userController.delete(u)}"/>
+                        </h:column>
+
+                    </h:dataTable>
+                </div>
+            </div>
+        </h:form>
+        <!--  ENDPRIMEFACES-->
+    </ui:define>
+</ui:composition>
+</body>
+<!--</f:view>-->
+</html>
