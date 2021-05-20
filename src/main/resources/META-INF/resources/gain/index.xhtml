@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+    <title>Transfert d'argent</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <!-- vendor css -->
+    <link rel="stylesheet" href="/template/lib/fontawesome-free/css/all.min.css"/>
+    <link rel="stylesheet" href="/template/lib/ionicons/css/ionicons.min.css"/>
+    <link rel="stylesheet" href="/template/lib/typicons.font/typicons.css"/>
+    <link rel="stylesheet" href="/template/lib/flag-icon-css/css/flag-icon.min.css"/>
+
+    <!-- azia CSS -->
+    <h:outputStylesheet name="/template/css/azia.css"/>
+</h:head>
+<!--<f:view>-->
+<body>
+<ui:composition template="/layout/base.xhtml">
+    <ui:define name="contenu">
+        <!--            PRIMEFACES-->
+        <h:form>
+            <div class="az-content-body pd-lg-l-40 d-flex flex-column">
+                <div class="az-content-label mg-b-5 py-2">
+                </div>
+                <div class="table-responsive">
+                    <h:dataTable var="g" value="#{gainController.gains}"
+                                 styleClass="table mg-b-0">
+                        <h:column>
+                            <f:facet name="header">Caissier 1</f:facet>
+                            <h:outputText value="#{g.caissier1.numeroPiece}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Bonus</f:facet>
+                            <h:outputText value="#{g.gainCaissier1}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Caissier 2</f:facet>
+                            <h:outputText value="#{g.caissier2.numeroPiece}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Bonus</f:facet>
+                            <h:outputText value="#{g.gainCaissier2}FCFA"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Systeme</f:facet>
+                            <h:outputText value="#{g.systeme}FCFA"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Etat</f:facet>
+                            <h:outputText value="#{g.etat}FCFA"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Statut</f:facet>
+                            <h:outputText value="#{g.solded == true ? 'Distribuer' : 'Non distribuer'}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Actions</f:facet>
+                            <h:commandButton styleClass="btn btn-outline-info" value="Distribuer"
+                                             action="#{gainController.distribuer(g)}"
+                                             rendered="#{g.solded == false}"/>
+                        </h:column>
+                    </h:dataTable>
+                </div>
+            </div>
+        </h:form>
+        <!--  ENDPRIMEFACES-->
+    </ui:define>
+</ui:composition>
+</body>
+<!--</f:view>-->
+</html>

@@ -20,6 +20,8 @@ public class Utilisateur implements UserDetails
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(length = 100, nullable = false, unique = true)
+    private String numeroPiece;
     @Column(nullable = false)
     private String nom;
     @Column(nullable = false, unique = true)
@@ -28,8 +30,22 @@ public class Utilisateur implements UserDetails
     private String prenom;
     @Column(length = 9, nullable = false, unique = true)
     private String telephone;
+    //    Si caissier ou admin
+    private String code;//egale à login pour se connecter à changer lors de la premiere connexion
+    private int iv;
+    private String photo;
+    @Column(length = 40)
+    private String numeroContrat;
+    @Column(columnDefinition = "text")
+    private String articleContrat;
     @Column(nullable = false)
     private String pwd;
+    private int adminId = 0;
+    private boolean changed = false;
+    @Transient
+    private MultipartFile[] parts;
+
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
     private Role role;
@@ -118,6 +134,78 @@ public class Utilisateur implements UserDetails
     public void setRole(Role role)
     {
         this.role = role;
+    }
+
+    public String getNumeroPiece() {
+        return numeroPiece;
+    }
+
+    public void setNumeroPiece(String numeroPiece) {
+        this.numeroPiece = numeroPiece;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public int getIv() {
+        return iv;
+    }
+
+    public void setIv(int iv) {
+        this.iv = iv;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public String getNumeroContrat() {
+        return numeroContrat;
+    }
+
+    public void setNumeroContrat(String numeroContrat) {
+        this.numeroContrat = numeroContrat;
+    }
+
+    public String getArticleContrat() {
+        return articleContrat;
+    }
+
+    public void setArticleContrat(String articleContrat) {
+        this.articleContrat = articleContrat;
+    }
+
+    public int getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(int adminId) {
+        this.adminId = adminId;
+    }
+
+    public boolean isChanged() {
+        return changed;
+    }
+
+    public void setChanged(boolean changed) {
+        this.changed = changed;
+    }
+
+    public MultipartFile[] getParts() {
+        return parts;
+    }
+
+    public void setParts(MultipartFile[] parts) {
+        this.parts = parts;
     }
 
     @Override
