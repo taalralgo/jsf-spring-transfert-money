@@ -135,7 +135,24 @@ public class ClientController
     public List<Client> getClients()
     {
         Utilisateur u = utilisateurRepository.findByLogin(utils.getConnectedUser());
-        clients = clientRepository.findAllByAdminId(u.getAdminId());
+        if(u.getRole().getLibRole().equals("ROLE_ADMIN"))
+        {
+            List<Utilisateur> list = utilisateurRepository.findByAdminId(u.getId());
+            Utilisateur caissier = list.size() > 0 ? list.get(0) : null;
+            if(caissier != null)
+            {
+                clients = clientRepository.findAllByAdminId(caissier.getAdminId());
+                System.out.println(clients.size());
+            }
+            else
+            {
+                clients = new ArrayList<Client>();
+            }
+        }
+        else
+        {
+            clients = clientRepository.findAllByAdminId(u.getAdminId());
+        }
         return clients;
     }
 

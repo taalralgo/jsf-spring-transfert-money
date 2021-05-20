@@ -70,7 +70,7 @@ public class TransactionController
                 {
                     this.transaction.setCode(this.randomString(10));
                     Utilisateur connected = getConnectedUser();
-                    if(connected.getRole().getLibRole() == "ROLE_ADMIN")
+                    if(connected.getRole().getLibRole().equals("ROLE_ADMIN"))
                     {
                         this.transaction.setAdminId(connected.getId());
                     }
@@ -79,6 +79,8 @@ public class TransactionController
                         this.transaction.setAdminId(getConnectedUser().getAdminId());
                     }
                     this.transaction.setUtilisateur(connected);
+                    double aRetirer = this.taxe(this.transaction.getMontant());
+                    this.transaction.setMontantAretirer(aRetirer);
                     transactionRepository.save(this.transaction);
                     emetteur.setCompte(emetteur.getCompte() - transaction.getMontant());
                     clientRepository.save(emetteur);
@@ -136,6 +138,15 @@ public class TransactionController
         gain.setCreatedAt(new Date());
         gainRepository.save(gain);
         return "index?faces-redirect=true";
+    }
+
+    public double taxe(int montantTransaction)
+    {
+        double taux = (double) 5/100;
+        double gainTaux = montantTransaction * taux;
+        //Montant a retirer
+        double montant = montantTransaction - gainTaux;
+        return montant;
     }
 
     public String update()

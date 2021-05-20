@@ -1,4 +1,4 @@
-@page { size: landscape; }
+/*@page { size: landscape; }*/
 @media print {
   body {
     font-family: 'Montserrat', sans-serif;
