@@ -97,6 +97,7 @@ public class UserController
                 user.setCode(user.getLogin());
                 user.setChanged(true);
                 user.setRole(role);
+                user.setPhoto("/template/img/noimg.jpg");
                 utilisateurRepository.save(user);
                 return "index?faces-redirect=true";
             }
